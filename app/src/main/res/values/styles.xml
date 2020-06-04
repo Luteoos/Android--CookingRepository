@@ -1,0 +1,121 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="android:textViewStyle">@style/StandardTextView</item>
+        <item name="editTextStyle">@style/RoundedEditText</item>
+        <item name="android:textColor">@color/colorFont</item>
+        <item name="buttonStyle">@style/StandardRoundedButton</item>
+
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/explode</item>
+        <item name="android:windowExitTransition">@android:transition/explode</item>
+    </style>
+
+    <style name="DialogActivity" parent="Theme.AppCompat.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="buttonStyle">@style/StandardRoundedButton</item>
+        <item name="editTextStyle">@style/RoundedEditText</item>
+        <item name="titleEnabled">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="HorizontalBarStyle" >
+        <item name="android:background">@color/colorBackgroundLight</item>
+        <item name="android:layout_height">@dimen/menuBarHeight</item>
+        <item name="buttonStyle">@style/CustomButtonBar</item>
+    </style>
+
+    <style name="CustomButtonBar" parent="Widget.AppCompat.ButtonBar">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorFont</item>
+        <item name="android:background">@color/colorBackgroundLight</item>
+        <item name="android:layout_height">@dimen/menuBarHeight</item>
+    </style>
+
+    <style name="RecyclerViewCard" parent="Base.CardView">
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+        <item name="cardCornerRadius">4dp</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="cardBackgroundColor">@color/colorCardViewBackground</item>
+    </style>
+
+    <style name="DefaultHeader" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:background">@color/colorBackgroundHeader</item>
+        <item name="cornerRadius">4dp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:height">2dp</item>
+    </style>
+
+    <style name="NestedRecyclerViewCard" parent="RecyclerViewCard">
+        <item name="cardBackgroundColor">@color/colorBackgroundDark</item>
+    </style>
+
+    <style name="StandardTextView" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="HeaderTextView" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="AccentTextView" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="RoundedEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColorHint">@color/colorAccentDark</item>
+        <item name="android:colorControlNormal">@color/colorPrimary</item>
+        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="android:colorControlHighlight">@color/colorPrimary</item>
+        <item name="android:background">@drawable/rounded_frame</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <style name="StandardRoundedButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <style name="TextButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/colorAccentDark</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:elevation">4dp</item>
+        <item name="background">@android:color/transparent</item>
+    </style>
+
+    <style name="FilledRoundedButton" parent="Widget.AppCompat.Button">
+        <!--        <item name="android:background">@drawable/rounded_button_filled</item>-->
+        <item name="android:textColor">@color/colorBackground</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
+    <style name="FabAdd" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="android:gravity">bottom|end</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="backgroundTint">@color/colorAccentDark</item>
+        <item name="android:clickable">true</item>
+        <item name="android:src">@drawable/ic_add_24px</item>
+    </style>
+
+</resources>
