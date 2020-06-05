@@ -1,10 +1,11 @@
-package io.github.luteoos.template.utils
+package io.github.luteoos.cookrepo.utils
 
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import io.github.luteoos.template.view.activity.SplashScreenActivity
+import io.github.luteoos.cookrepo.view.activity.SplashScreenActivity
+import io.realm.Realm
 
 class Session(context: Context) {
     private val USER_UUID = "USER_UUID"
@@ -22,6 +23,9 @@ class Session(context: Context) {
 
     fun logout(context: Context) {
         preferences.edit().clear().apply()
+        Realm.getDefaultConfiguration()?.let {
+            Realm.deleteRealm(it)
+        }
         val intent = Intent(context, SplashScreenActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

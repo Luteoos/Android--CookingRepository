@@ -1,4 +1,4 @@
-package io.github.luteoos.template.utils
+package io.github.luteoos.cookrepo.utils
 
 import java.text.SimpleDateFormat
 import java.util.*

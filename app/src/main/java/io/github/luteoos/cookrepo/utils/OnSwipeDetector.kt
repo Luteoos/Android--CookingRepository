@@ -1,11 +1,10 @@
-package io.github.luteoos.template.utils
+package io.github.luteoos.cookrepo.utils
 
 import android.content.Context
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import timber.log.Timber
-import java.lang.Exception
 
 /**
  *        smth.setOnTouchListener(object: OnSwipeDetector(context!!){

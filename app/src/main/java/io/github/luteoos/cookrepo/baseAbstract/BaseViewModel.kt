@@ -1,4 +1,4 @@
-package io.github.luteoos.template.baseAbstract
+package io.github.luteoos.cookrepo.baseAbstract
 
 import io.github.luteoos.mvvmbaselib.BaseViewModel
 

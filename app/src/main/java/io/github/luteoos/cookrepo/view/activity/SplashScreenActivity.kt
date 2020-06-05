@@ -1,10 +1,9 @@
-package io.github.luteoos.template.view.activity
+package io.github.luteoos.cookrepo.view.activity
 
 import android.content.Intent
 import android.os.Bundle
-import io.github.luteoos.template.R
-import io.github.luteoos.template.baseAbstract.ActivityNoVM
-import kotlinx.android.synthetic.main.activity_splash_screen.*
+import io.github.luteoos.cookrepo.R
+import io.github.luteoos.cookrepo.baseAbstract.ActivityNoVM
 
 class SplashScreenActivity : ActivityNoVM() {
 
@@ -16,6 +15,8 @@ class SplashScreenActivity : ActivityNoVM() {
     }
 
     private fun startMainScreenActivity(){
-        TODO("NOT IMPLEMENTED")
+        val intent = Intent(this, MainScreenActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }

@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "Android-MVVM-Koin--QuickTemplate"
+rootProject.name = "Android--CookingRepository"

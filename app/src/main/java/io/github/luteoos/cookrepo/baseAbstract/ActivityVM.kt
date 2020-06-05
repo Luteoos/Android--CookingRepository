@@ -1,18 +1,22 @@
-package io.github.luteoos.template.baseAbstract
+package io.github.luteoos.cookrepo.baseAbstract
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
-import io.github.luteoos.mvvmbaselib.BaseFragmentMVVMWithoutVM
 import io.github.luteoos.mvvmbaselib.BaseViewModel
 import io.github.luteoos.mvvmbaselib.Event
 
-abstract class FragmentVM<T: BaseViewModel> : BaseFragmentMVVMWithoutVM() {
-    /**
-     * init it with getViewModel<T>(this)
-     */
+abstract class ActivityVM<T: BaseViewModel> : ActivityNoVM() {
+
     abstract val viewModel: T
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setPortraitOrientation(true)
+    }
+
+
     /**
-     * invoke when VM is assigned
+     * To invoke when VM is assigned
      */
     fun connectToVMMessage(){
         viewModel.message().observe(this, Observer { onVMMessage(it) })
@@ -20,9 +24,9 @@ abstract class FragmentVM<T: BaseViewModel> : BaseFragmentMVVMWithoutVM() {
 
     /**
      * override it to handle message from ViewModel
+     *
      */
     open fun onVMMessage(msg: Event<Int>){
-
     }
 
 }

@@ -1,4 +1,4 @@
-package io.github.luteoos.template
+package io.github.luteoos.cookrepo
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

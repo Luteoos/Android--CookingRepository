@@ -1,16 +1,12 @@
-package io.github.luteoos.template.baseAbstract
+package io.github.luteoos.cookrepo.baseAbstract
 
 import android.content.Context
 import android.content.pm.ActivityInfo
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import io.github.luteoos.template.utils.Session
-import io.github.luteoos.mvvmbaselib.BaseActivityMVVM
-import io.github.luteoos.mvvmbaselib.BaseActivityMVVMWithoutVM
+import io.github.luteoos.cookrepo.utils.Session
 import org.koin.android.ext.android.inject
-import org.koin.core.parameter.parametersOf
 
 abstract class ActivityNoVM : AppCompatActivity(){
 
