@@ -2,26 +2,14 @@ package io.github.luteoos.cookrepo.baseAbstract
 
 import android.content.Context
 import android.content.pm.ActivityInfo
-import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import io.github.luteoos.cookrepo.utils.Session
 import org.koin.android.ext.android.inject
 
-abstract class ActivityNoVM : AppCompatActivity(){
+abstract class ActivityNoVM(layoutId: Int) : AppCompatActivity(layoutId){
 
     val session: Session by inject()
-
-    /**
-     * override and set layoutId here
-     */
-    abstract fun getLayoutID(): Int
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(getLayoutID())
-        setPortraitOrientation(true)
-    }
 
     /**
      * true to portrait <-> default

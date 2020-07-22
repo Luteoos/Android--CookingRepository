@@ -3,17 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_screen_nav_module"
-    app:startDestination="@id/userProfileFragment">
+    app:startDestination="@id/recipeListFragment">
 
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="io.github.luteoos.cookrepo.view.fragment.UserProfileFragment"
         android:label="UserProfileFragment"
-        tools:layout="@layout/fragment_user_profile">
-        <action
-            android:id="@+id/action_userProfileFragment_to_recipeListFragment"
-            app:destination="@id/recipeListFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_user_profile"/>
     <fragment
         android:id="@+id/recipeListFragment"
         android:name="io.github.luteoos.cookrepo.view.fragment.RecipeListFragment"

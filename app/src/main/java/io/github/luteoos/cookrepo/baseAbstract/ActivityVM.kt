@@ -1,18 +1,12 @@
 package io.github.luteoos.cookrepo.baseAbstract
 
-import android.os.Bundle
 import androidx.lifecycle.Observer
 import io.github.luteoos.mvvmbaselib.BaseViewModel
 import io.github.luteoos.mvvmbaselib.Event
 
-abstract class ActivityVM<T: BaseViewModel> : ActivityNoVM() {
+abstract class ActivityVM<T: BaseViewModel>(layoutId: Int) : ActivityNoVM(layoutId) {
 
     abstract val viewModel: T
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setPortraitOrientation(true)
-    }
 
 
     /**

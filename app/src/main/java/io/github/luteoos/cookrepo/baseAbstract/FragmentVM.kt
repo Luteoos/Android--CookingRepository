@@ -4,7 +4,7 @@ import androidx.lifecycle.Observer
 import io.github.luteoos.mvvmbaselib.BaseViewModel
 import io.github.luteoos.mvvmbaselib.Event
 
-abstract class FragmentVM<T: BaseViewModel> : FragmentNoVM() {
+abstract class FragmentVM<T: BaseViewModel>(layoutId: Int) : FragmentNoVM(layoutId) {
     /**
      * init it with getViewModel<T>(this)
      */

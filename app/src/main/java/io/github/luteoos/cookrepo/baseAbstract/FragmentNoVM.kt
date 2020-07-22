@@ -1,22 +1,9 @@
 package io.github.luteoos.cookrepo.baseAbstract
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
 
-abstract class FragmentNoVM : Fragment() {
-
-    /**
-     * override and set layoutId here
-     */
-    abstract fun getLayoutID(): Int
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getLayoutID(), container, false)
-    }
+abstract class FragmentNoVM(layoutId: Int) : Fragment(layoutId) {
 
     /**
      * call to hide keyboard

@@ -22,4 +22,4 @@ val mainScreenModule = module {
  * Add your viewModel DI here ex. viewModel { TemplateViewModel() }
  */
 
-val koinModules = listOf(sessionPreferenceModule)
+val koinModules = listOf(mainScreenModule, sessionPreferenceModule)
