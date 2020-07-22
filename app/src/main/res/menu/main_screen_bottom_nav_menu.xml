@@ -6,16 +6,19 @@
     <item
         android:id="@+id/all_recipes"
         android:enabled="true"
-        android:title="Recipes"/>
+        android:title="@string/recipes"
+        android:icon="@drawable/ic_list_18dp"/>
 
     <item
         android:id="@+id/favs_recipes"
         android:enabled="true"
-        android:title="Fav"/>
+        android:title="@string/favs"
+        android:icon="@drawable/ic_favorite_18dp"/>
 
     <item
         android:id="@+id/profile"
         android:enabled="true"
-        android:title="Profile"/>
+        android:title="@string/profile"
+        android:icon="@drawable/ic_person_18dp"/>
 
 </menu>

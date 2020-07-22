@@ -1,3 +1,7 @@
 <resources>
     <string name="template_author">Mateusz Lutecki</string>
+    <string name="profile">Profile</string>
+    <string name="favs">Favourites</string>
+    <string name="recipes">Recipies</string>
+    <string name="username_hint">Username</string>
 </resources>

@@ -24,7 +24,7 @@ class MainScreenActivity : ActivityVM<MainScreenViewModel>(R.layout.activity_mai
                 R.id.favs_recipes ->{}
                 R.id.profile -> openFragment(R.id.userProfileFragment)
             }
-            return@setOnNavigationItemSelectedListener false
+            return@setOnNavigationItemSelectedListener true
         }
 
         textView3.setOnClickListener {
