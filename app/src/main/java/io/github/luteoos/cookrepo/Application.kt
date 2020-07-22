@@ -15,7 +15,8 @@ class Application : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            androidLogger()
+            if(io.github.luteoos.cookrepo.BuildConfig.DEBUG)
+                androidLogger()
             androidContext(this@Application)
             modules(koinModules)
         }
@@ -34,7 +35,7 @@ class Application : Application() {
 
     private fun initDebugStuff() {
         Timber.plant(Timber.DebugTree())
-        Timber.e("initDebugStuff")
+        Timber.i("initDebug Policy")
         StrictMode.setThreadPolicy(
             StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads()
