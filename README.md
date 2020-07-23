@@ -1,5 +1,5 @@
 # Android--CookingRepository
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Luteoos/Android--CookingRepository/blob/master/LICENSE)
 
 Template repository containing:
 - Koin
