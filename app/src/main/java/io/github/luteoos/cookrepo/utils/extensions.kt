@@ -1,14 +1,21 @@
 package io.github.luteoos.cookrepo.utils
 
+import io.github.luteoos.cookrepo.data.realm.BaseRealmInterface
 import io.realm.Realm
 import io.realm.RealmObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun <T : RealmObject> Realm.getFirst(uuid: String, clazz: Class<T>): T? =
+fun <T: BaseRealmInterface> T.create(authorName: String){
+    this.id = UUID.randomUUID().toString()
+    this.author = authorName
+    this.created = Calendar.getInstance().getSDFdate() //change to respect GMT
+}
+
+fun <T : RealmObject> Realm.getFirst(id: String, clazz: Class<T>): T? =
         this
                 .where(clazz)
-                .equalTo("id", uuid)
+                .equalTo("id", id)
                 .findFirst()
 
 fun Calendar.getRestDate(): String{
