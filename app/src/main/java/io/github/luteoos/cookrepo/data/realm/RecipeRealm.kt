@@ -1,5 +1,6 @@
 package io.github.luteoos.cookrepo.data.realm
 
+import io.github.luteoos.cookrepo.utils.create
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
@@ -11,7 +12,7 @@ open class RecipeRealm : RealmObject(), BaseRealmInterface{
     override var author: String? = null
 
     fun create(author: String): RecipeRealm {
-        this.create(author)
+        this.create(authorName = author)
         return this
     }
 }
