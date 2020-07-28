@@ -19,7 +19,7 @@ class SplashScreenActivity : ActivityNoVM(R.layout.activity_splash_screen) {
         startMainScreenActivity()
     }
 
-    private fun startMainScreenActivity(){
+    private fun startMainScreenActivity() {
         val intent = Intent(this, MainScreenActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

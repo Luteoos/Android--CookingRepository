@@ -12,7 +12,6 @@ class Session(context: Context) {
     private val USERNAME = "USERNAME"
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-
     var username: String
         get() {
             return preferences.getString(USERNAME, Parameters.EMPTY_USERNAME) ?: Parameters.EMPTY_USERNAME

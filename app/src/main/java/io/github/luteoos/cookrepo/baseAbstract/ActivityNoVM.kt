@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import io.github.luteoos.cookrepo.utils.Session
 import org.koin.android.ext.android.inject
 
-abstract class ActivityNoVM(layoutId: Int) : AppCompatActivity(layoutId){
+abstract class ActivityNoVM(layoutId: Int) : AppCompatActivity(layoutId) {
 
     val session: Session by inject()
 
@@ -16,7 +16,7 @@ abstract class ActivityNoVM(layoutId: Int) : AppCompatActivity(layoutId){
      * false to landscape
      */
     fun setPortraitOrientation(isPortrait: Boolean = true) {
-        requestedOrientation = when(isPortrait){
+        requestedOrientation = when (isPortrait) {
             true -> ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             false -> ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         }
@@ -25,8 +25,8 @@ abstract class ActivityNoVM(layoutId: Int) : AppCompatActivity(layoutId){
     /**
      * cal for hide keyboard from this activity
      */
-    fun hideKeyboard(){
-        if(this.currentFocus != null){
+    fun hideKeyboard() {
+        if (this.currentFocus != null) {
             val inputMng = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMng.hideSoftInputFromWindow(this.currentFocus!!.windowToken, 0)
         }

@@ -4,7 +4,7 @@ import androidx.lifecycle.Observer
 import io.github.luteoos.mvvmbaselib.BaseViewModel
 import io.github.luteoos.mvvmbaselib.Event
 
-abstract class FragmentVM<T: BaseViewModel>(layoutId: Int) : FragmentNoVM(layoutId) {
+abstract class FragmentVM<T : BaseViewModel>(layoutId: Int) : FragmentNoVM(layoutId) {
     /**
      * init it with getViewModel<T>(this)
      */
@@ -13,15 +13,13 @@ abstract class FragmentVM<T: BaseViewModel>(layoutId: Int) : FragmentNoVM(layout
     /**
      * invoke when VM is assigned
      */
-    fun connectToVMMessage(){
+    fun connectToVMMessage() {
         viewModel.message().observe(this, Observer { onVMMessage(it) })
     }
 
     /**
      * override it to handle message from ViewModel
      */
-    open fun onVMMessage(msg: Event<Int>){
-
+    open fun onVMMessage(msg: Event<Int>) {
     }
-
 }

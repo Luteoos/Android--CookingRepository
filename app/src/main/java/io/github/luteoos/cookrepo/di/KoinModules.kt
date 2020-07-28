@@ -11,7 +11,6 @@ import org.koin.dsl.module
  */
 val sessionPreferenceModule = module {
     single { Session(androidContext()) }
-
 }
 
 val mainScreenModule = module {

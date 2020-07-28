@@ -17,11 +17,11 @@ class MainScreenActivity : ActivityVM<MainScreenViewModel>(R.layout.activity_mai
         setBindings()
     }
 
-    private fun setBindings(){
+    private fun setBindings() {
         bottomNavBar.setOnNavigationItemSelectedListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.all_recipes -> openFragment(R.id.recipeListFragment)
-                R.id.favs_recipes ->{}
+                R.id.favs_recipes -> {}
                 R.id.profile -> openFragment(R.id.userProfileFragment)
             }
             return@setOnNavigationItemSelectedListener true
@@ -37,9 +37,9 @@ class MainScreenActivity : ActivityVM<MainScreenViewModel>(R.layout.activity_mai
 //        }
     }
 
-    private fun openFragment(fragmentId: Int){
+    private fun openFragment(fragmentId: Int) {
         findNavController(R.id.mainFragment).let { navController ->
-            if(navController.currentDestination?.id != fragmentId)
+            if (navController.currentDestination?.id != fragmentId)
                 navController.navigate(fragmentId)
         }
     }

@@ -4,15 +4,14 @@ import androidx.lifecycle.Observer
 import io.github.luteoos.mvvmbaselib.BaseViewModel
 import io.github.luteoos.mvvmbaselib.Event
 
-abstract class ActivityVM<T: BaseViewModel>(layoutId: Int) : ActivityNoVM(layoutId) {
+abstract class ActivityVM<T : BaseViewModel>(layoutId: Int) : ActivityNoVM(layoutId) {
 
     abstract val viewModel: T
-
 
     /**
      * To invoke when VM is assigned
      */
-    fun connectToVMMessage(){
+    fun connectToVMMessage() {
         viewModel.message().observe(this, Observer { onVMMessage(it) })
     }
 
@@ -20,7 +19,6 @@ abstract class ActivityVM<T: BaseViewModel>(layoutId: Int) : ActivityNoVM(layout
      * override it to handle message from ViewModel
      *
      */
-    open fun onVMMessage(msg: Event<Int>){
+    open fun onVMMessage(msg: Event<Int>) {
     }
-
 }

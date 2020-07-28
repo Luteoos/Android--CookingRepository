@@ -11,11 +11,10 @@ import org.koin.test.KoinTest
 import org.koin.test.check.checkModules
 import org.mockito.Mockito
 
-
 class DITest : KoinTest {
 
     @Test
-    fun checkDependencyGraph(){
+    fun checkDependencyGraph() {
         koinApplication {
             val mockContext = module(override = true) {
                 androidContext(Mockito.mock(Context::class.java))
@@ -24,5 +23,4 @@ class DITest : KoinTest {
             modules(mainScreenModule + mockContext)
         }.checkModules()
     }
-
 }

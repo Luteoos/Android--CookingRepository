@@ -12,8 +12,7 @@ abstract class FragmentNoVM(layoutId: Int) : Fragment(layoutId) {
     /**
      * call to hide keyboard
      */
-    fun hideKeyboard(){
+    fun hideKeyboard() {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
     }
-
 }

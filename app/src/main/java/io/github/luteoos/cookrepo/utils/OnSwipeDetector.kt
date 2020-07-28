@@ -25,23 +25,22 @@ open class OnSwipeDetector(val ctx: Context) : View.OnTouchListener {
         return detector.onTouchEvent(event)
     }
 
-    open fun onSwipeTop(){
+    open fun onSwipeTop() {
     }
 
-    open fun onSwipeBottom(){
+    open fun onSwipeBottom() {
     }
 
-    open fun onSwipeLeft(){
+    open fun onSwipeLeft() {
     }
 
-    open fun onSwipeRight(){
+    open fun onSwipeRight() {
     }
 
-    open fun onAnyActionPerformed(){
-
+    open fun onAnyActionPerformed() {
     }
 
-    private class GestureListener(val owner: OnSwipeDetector) : GestureDetector.SimpleOnGestureListener(){
+    private class GestureListener(val owner: OnSwipeDetector) : GestureDetector.SimpleOnGestureListener() {
 
         private val SWIPE_THRESHOLD = 100
         private val SWIPE_VELOCITY_THRESHOLD = 100
@@ -65,8 +64,7 @@ open class OnSwipeDetector(val ctx: Context) : View.OnTouchListener {
                         }
                         result = true
                     }
-                }
-                else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffY > 0) {
                         owner.onSwipeBottom()
                     } else {

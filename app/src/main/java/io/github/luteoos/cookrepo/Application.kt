@@ -15,22 +15,24 @@ class Application : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            if(io.github.luteoos.cookrepo.BuildConfig.DEBUG)
+            if (io.github.luteoos.cookrepo.BuildConfig.DEBUG)
                 androidLogger()
             androidContext(this@Application)
             modules(koinModules)
         }
         initRealm()
-        if(BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG)
             initDebugStuff()
     }
 
-    private fun initRealm(){
+    private fun initRealm() {
         Realm.init(this)
-        Realm.setDefaultConfiguration(RealmConfiguration
-            .Builder()
-            .compactOnLaunch()
-            .build())
+        Realm.setDefaultConfiguration(
+            RealmConfiguration
+                .Builder()
+                .compactOnLaunch()
+                .build()
+        )
     }
 
     private fun initDebugStuff() {
@@ -42,6 +44,7 @@ class Application : Application() {
                 .detectDiskWrites()
                 .detectNetwork()
                 .penaltyLog()
-                .build())
+                .build()
+        )
     }
 }
