@@ -10,7 +10,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "io.github.luteoos.template"
+        applicationId "io.github.luteoos.cookrepo"
         minSdkVersion 25
         targetSdkVersion 30
         versionName "$app_version"
@@ -26,6 +26,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            debuggable = true
             minifyEnabled false
             applicationIdSuffix ".debug"
         }

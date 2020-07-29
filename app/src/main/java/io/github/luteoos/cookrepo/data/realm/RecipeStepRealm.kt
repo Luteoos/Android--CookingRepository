@@ -1,22 +1,24 @@
 package io.github.luteoos.cookrepo.data.realm
 
 import io.github.luteoos.cookrepo.utils.create
-import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.annotations.Ignore
 import io.realm.annotations.PrimaryKey
 
-open class RecipeRealm : RealmObject(), BaseRealmInterface {
+open class RecipeStepRealm : RealmObject(), BaseRealmInterface {
 
     @PrimaryKey
     override lateinit var id: String
     override lateinit var created: String
     override lateinit var author: String
 
-    var ingredients: RealmList<IngredientAmountRealm> = RealmList()
-    var steps: RealmList<RecipeStepRealm> = RealmList()
+    lateinit var text: String
+    @Ignore
+    var isCompleted: Boolean = false
 
-    fun create(author: String): RecipeRealm {
-        this.create(authorName = author)
+    fun create(text: String, author: String): RecipeStepRealm {
+        this.create(author)
+        this.text = text
         return this
     }
 }

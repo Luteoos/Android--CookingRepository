@@ -2,7 +2,6 @@ package io.github.luteoos.cookrepo
 
 import android.app.Application
 import android.os.StrictMode
-import com.luteoos.kotlin.mvvmbaselib.BuildConfig
 import io.github.luteoos.cookrepo.di.koinModules
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -15,7 +14,7 @@ class Application : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            if (io.github.luteoos.cookrepo.BuildConfig.DEBUG)
+            if (BuildConfig.DEBUG)
                 androidLogger()
             androidContext(this@Application)
             modules(koinModules)
@@ -31,6 +30,7 @@ class Application : Application() {
             RealmConfiguration
                 .Builder()
                 .compactOnLaunch()
+                .schemaVersion(0)
                 .build()
         )
     }

@@ -2,6 +2,7 @@ package io.github.luteoos.cookrepo.baseAbstract
 
 import android.content.Context
 import android.content.pm.ActivityInfo
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import io.github.luteoos.cookrepo.utils.Session
@@ -25,10 +26,8 @@ abstract class ActivityNoVM(layoutId: Int) : AppCompatActivity(layoutId) {
     /**
      * cal for hide keyboard from this activity
      */
-    fun hideKeyboard() {
-        if (this.currentFocus != null) {
-            val inputMng = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMng.hideSoftInputFromWindow(this.currentFocus!!.windowToken, 0)
-        }
+    fun hideKeyboard(view: View) {
+        (this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
+            .hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

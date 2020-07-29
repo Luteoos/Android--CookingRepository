@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activity.MainScreenActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden"/>
     </application>
 
 </manifest>
