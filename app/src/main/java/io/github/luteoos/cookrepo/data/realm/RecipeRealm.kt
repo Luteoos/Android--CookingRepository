@@ -12,11 +12,15 @@ open class RecipeRealm : RealmObject(), BaseRealmInterface {
     override lateinit var created: String
     override lateinit var author: String
 
+    var name: String = ""
+    var description: String = ""
     var ingredients: RealmList<IngredientAmountRealm> = RealmList()
     var steps: RealmList<RecipeStepRealm> = RealmList()
 
-    fun create(author: String): RecipeRealm {
+    fun create(author: String, name: String, description: String = ""): RecipeRealm {
         this.create(authorName = author)
+        this.name = name
+        this.description = description
         return this
     }
 }

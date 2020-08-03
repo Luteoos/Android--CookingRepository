@@ -16,7 +16,6 @@ class UserProfileFragment : FragmentVM<UserProfileViewModel>(R.layout.fragment_u
         usernameInput.editText?.setText(viewModel.getUsername(session))
         usernameInput.editText?.setOnFocusChangeListener { view, hasFocus ->
             if (!hasFocus) {
-//                view.clearFocus()
                 this.hideKeyboard(view)
             }
         }

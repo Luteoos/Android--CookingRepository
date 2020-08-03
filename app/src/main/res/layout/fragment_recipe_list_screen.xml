@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/recipeMotionLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutDescription="@xml/fragment_recipe_list_screen_scene">
+    android:layout_height="match_parent">
+<!--    android:id="@+id/recipeMotionLayout"-->
+<!--    app:layoutDescription="@xml/fragment_recipe_list_screen_scene">-->
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="recipe yes"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAdd"
@@ -23,10 +20,10 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         app:tint="@color/white_smoke"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         app:srcCompat="@drawable/ic_add_24px"
         android:focusable="true"
         tools:ignore="ContentDescription" />
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</RelativeLayout>

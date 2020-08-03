@@ -9,18 +9,6 @@ class SplashScreenActivity : ActivityNoVM(R.layout.activity_splash_screen) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val a = RecipeRealm().create(session.username)
-//        val b = IngredientRealm().create("test 1 ", session.username)
-//        val c = IngredientAmountRealm().create(b, 10, session.username)
-//        Realm.getDefaultInstance().use { realm ->
-//            realm.executeTransaction {
-//                realm.copyToRealmOrUpdate(a)
-//                realm.copyToRealmOrUpdate(b)
-//                realm.copyToRealmOrUpdate(c)
-//                realm.getFirst(a.id, RecipeRealm::class.java)!!.ingredients
-//            }
-//            Timber.i("cookbook ${realm.getFirst(a.id!!, RecipeRealm::class.java)?.id}")
-//        }
         startMainScreenActivity()
     }
 

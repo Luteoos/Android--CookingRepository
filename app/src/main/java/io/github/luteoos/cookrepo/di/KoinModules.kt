@@ -1,5 +1,8 @@
 package io.github.luteoos.cookrepo.di
 
+import io.github.luteoos.cookrepo.adapters.RVAdapterRecipes
+import io.github.luteoos.cookrepo.repository.RecipeRepository
+import io.github.luteoos.cookrepo.repository.RecipeRepositoryInterface
 import io.github.luteoos.cookrepo.utils.Session
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
 import io.github.luteoos.cookrepo.viewmodel.UserProfileViewModel
@@ -15,7 +18,9 @@ val sessionPreferenceModule = module {
 }
 
 val mainScreenModule = module {
-    viewModel { MainScreenViewModel() }
+    viewModel { MainScreenViewModel(get()) }
+    factory { RVAdapterRecipes(null) }
+    factory <RecipeRepositoryInterface> { RecipeRepository() }
 }
 
 val userProfileModule = module {
