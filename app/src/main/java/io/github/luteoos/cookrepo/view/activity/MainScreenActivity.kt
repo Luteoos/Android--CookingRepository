@@ -21,7 +21,7 @@ class MainScreenActivity : ActivityVM<MainScreenViewModel>(R.layout.activity_mai
         bottomNavBar.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.all_recipes -> openFragment(R.id.recipeListFragment)
-                R.id.favs_recipes -> {}
+                R.id.favs_recipes -> openFragment(R.id.starredListFragment)
                 R.id.profile -> openFragment(R.id.userProfileFragment)
             }
             return@setOnNavigationItemSelectedListener true

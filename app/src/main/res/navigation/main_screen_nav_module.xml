@@ -15,4 +15,9 @@
         android:name="io.github.luteoos.cookrepo.view.fragment.RecipeListFragment"
         android:label="RecipeListFragment"
         tools:layout="@layout/fragment_recipe_list_screen"/>
+    <fragment
+        android:id="@+id/starredListFragment"
+        android:name="io.github.luteoos.cookrepo.view.fragment.StarredListFragment"
+        android:label="StarredListFragment"
+        tools:layout="@layout/fragment_starred_list_screen"/>
 </navigation>

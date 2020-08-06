@@ -14,7 +14,7 @@ import io.realm.RealmResults
 class RVAdapterRecipes(data: RealmResults<RecipeRealm>?) :
     RealmRecyclerViewAdapter<RecipeRealm, RVAdapterRecipes.RecipesViewHolder>(data, true) {
 
-    val onClick : PublishSubject<String> = PublishSubject.create()
+    val onClick: PublishSubject<String> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipesViewHolder =
         RecipesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.rv_recipe, parent, false))

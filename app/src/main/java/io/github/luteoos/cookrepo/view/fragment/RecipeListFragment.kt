@@ -13,7 +13,7 @@ import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_recipe_list_screen.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import java.util.*
+import java.util.UUID
 
 class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_list_screen) {
 
@@ -37,8 +37,7 @@ class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(this@RecipeListFragment.context)
         }
-        rvAdapter.onClick.subscribe{id ->
-
+        rvAdapter.onClick.subscribe { id ->
         }
     }
 

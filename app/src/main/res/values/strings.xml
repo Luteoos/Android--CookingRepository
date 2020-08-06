@@ -4,4 +4,6 @@
     <string name="favs">Favourites</string>
     <string name="recipes">Recipies</string>
     <string name="username_hint">Username</string>
+    <string name="recipe_step_hint">recipe step hint</string>
+    <string name="ingredient_hint">recipe step hint</string>
 </resources>
