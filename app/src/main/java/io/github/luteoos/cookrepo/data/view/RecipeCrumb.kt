@@ -4,7 +4,8 @@ sealed class RecipeCrumb {
     data class IngredientAmountViewData(
         val id: String,
         val ingredient: IngredientViewData,
-        val amount: Int
+        val amount: Int,
+        val unit: String
     ) : RecipeCrumb()
     data class RecipeStepViewData(
         val id: String,

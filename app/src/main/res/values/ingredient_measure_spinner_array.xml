@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="ingredient_measure">
+        <item>g</item>
+        <item>dg</item>
+        <item>Kg</item>
+
+    </array>
+</resources>
