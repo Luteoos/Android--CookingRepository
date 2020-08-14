@@ -1,28 +1,30 @@
 package io.github.luteoos.cookrepo
 
-import android.app.Application
+// import io.github.luteoos.cookrepo.di.koinModules
 import android.os.StrictMode
-import io.github.luteoos.cookrepo.di.koinModules
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
+import io.github.luteoos.cookrepo.di.DaggerAppComponent
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
 import timber.log.Timber
 
-class Application : Application() {
+class Application : DaggerApplication() {
+
     override fun onCreate() {
         super.onCreate()
-        startKoin {
-            if (BuildConfig.DEBUG)
-                androidLogger()
-            androidContext(this@Application)
-            modules(koinModules)
-        }
+//        startKoin {
+//            if (BuildConfig.DEBUG)
+//                androidLogger()
+//            androidContext(this@Application)
+//            modules(koinModules)
+//        }
         initRealm()
         if (BuildConfig.DEBUG)
             initDebugStuff()
     }
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = DaggerAppComponent.builder().application(this).build()
 
     private fun initRealm() {
         Realm.init(this)

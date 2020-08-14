@@ -3,13 +3,9 @@ package io.github.luteoos.cookrepo.baseAbstract
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.fragment.app.Fragment
-import io.github.luteoos.cookrepo.utils.Session
-import org.koin.android.ext.android.inject
+import dagger.android.support.DaggerFragment
 
-abstract class FragmentNoVM(layoutId: Int) : Fragment(layoutId) {
-
-    val session: Session by inject()
+abstract class FragmentNoVM(layoutId: Int) : DaggerFragment(layoutId) {
 
     /**
      * call to hide keyboard

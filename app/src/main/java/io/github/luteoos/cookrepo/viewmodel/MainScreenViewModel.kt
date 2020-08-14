@@ -9,14 +9,19 @@ import io.github.luteoos.cookrepo.repository.RecipeRepositoryInterface
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.RealmResults
+import timber.log.Timber
+import javax.inject.Inject
 
-class MainScreenViewModel(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel() {
+class MainScreenViewModel
+@Inject
+constructor(val recipeRepo: RecipeRepositoryInterface) : BaseViewModel() {
 
     private val subscribers = CompositeDisposable()
     private val recipes = MutableLiveData<RealmResults<RecipeRealm>>()
     private val recipe = MutableLiveData<RecipeViewData>()
 
     init {
+        Timber.d(" ${this.javaClass.canonicalName} View model created  hashCode ${this.hashCode()}")
         recipeRepo.getRecipesObservable()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {

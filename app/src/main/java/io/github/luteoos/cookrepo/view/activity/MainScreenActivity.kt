@@ -1,16 +1,21 @@
 package io.github.luteoos.cookrepo.view.activity
 
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.baseAbstract.ActivityVM
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
+import io.github.luteoos.cookrepo.viewmodel.factory.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.activity_main_screen.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class MainScreenActivity : ActivityVM<MainScreenViewModel>(R.layout.activity_main_screen) {
 
-    override val viewModel: MainScreenViewModel by viewModel()
+    @Inject
+    lateinit var provider: ViewModelProviderFactory
+
+    override val viewModel: MainScreenViewModel by lazy { ViewModelProvider(this, provider).get(MainScreenViewModel::class.java) } // ViewModelProviders.of(this, provider).get(MainScreenViewModel::class.java) } // by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -2,6 +2,7 @@ package io.github.luteoos.cookrepo.view.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,14 +10,17 @@ import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.adapters.RVAdapterRecipes
 import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
+import io.github.luteoos.cookrepo.viewmodel.factory.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.fragment_starred_list_screen.*
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import javax.inject.Inject
 
 class StarredListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_starred_list_screen) {
 
-    override val viewModel: MainScreenViewModel by sharedViewModel()
-    private val rvAdapter: RVAdapterRecipes by inject()
+    @Inject
+    lateinit var provider: ViewModelProviderFactory
+    override val viewModel: MainScreenViewModel by lazy { ViewModelProvider(requireActivity(), provider).get(MainScreenViewModel::class.java) }
+    @Inject
+    lateinit var rvAdapter: RVAdapterRecipes
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

@@ -2,6 +2,7 @@ package io.github.luteoos.cookrepo.view.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,14 +11,17 @@ import io.github.luteoos.cookrepo.adapters.RVAdapterRecipeCrumbs
 import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
 import io.github.luteoos.cookrepo.data.view.RecipeViewData
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
+import io.github.luteoos.cookrepo.viewmodel.factory.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.fragment_recipe_screen.*
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import javax.inject.Inject
 
 class RecipeFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_screen) {
 
-    override val viewModel: MainScreenViewModel by sharedViewModel()
-    private val rvAdapter: RVAdapterRecipeCrumbs by inject()
+    @Inject
+    lateinit var provider: ViewModelProviderFactory
+    override val viewModel: MainScreenViewModel by lazy { ViewModelProvider(requireActivity(), provider).get(MainScreenViewModel::class.java) }
+    @Inject
+    lateinit var rvAdapter: RVAdapterRecipeCrumbs
     private val args: RecipeFragmentArgs by navArgs()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
