@@ -80,8 +80,8 @@ dependencies {
     //logger
     implementation 'com.jakewharton.timber:timber:4.7.1'
     //di
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+//    implementation "org.koin:koin-android:$koin_version"
+//    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     //material components
     def material_version = "1.2.0"
     implementation "com.google.android.material:material:$material_version"
