@@ -22,7 +22,7 @@ class RVAdapterRecipes(data: RealmResults<RecipeRealm>?) :
     override fun onBindViewHolder(holder: RecipesViewHolder, position: Int) {
         data?.get(position)?.let { data ->
             holder.tvName.text = data.name
-            holder.tvDesc.text = data.description
+            holder.tvDesc.text = data.id
             holder.itemView.setOnClickListener {
                 onClick.onNext(data.id)
             }

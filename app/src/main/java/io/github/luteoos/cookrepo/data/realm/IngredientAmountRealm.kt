@@ -13,12 +13,12 @@ open class IngredientAmountRealm : RealmObject(), BaseRealmInterface {
     override lateinit var author: String
 
     var ingredient: IngredientRealm? = null
-    var amount: Int = 0
+    var amount: String = "0"
 //    lateinit var unit : String =\
     @Ignore
     var isCompleted: Boolean = false
 
-    fun create(ingredientRealm: IngredientRealm, amount: Int, author: String): IngredientAmountRealm {
+    fun create(ingredientRealm: IngredientRealm, amount: String, author: String): IngredientAmountRealm {
         this.create(author)
         this.ingredient = ingredientRealm
         this.amount = amount

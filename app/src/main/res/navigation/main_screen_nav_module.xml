@@ -14,10 +14,29 @@
         android:id="@+id/recipeListFragment"
         android:name="io.github.luteoos.cookrepo.view.fragment.RecipeListFragment"
         android:label="RecipeListFragment"
-        tools:layout="@layout/fragment_recipe_list_screen"/>
+        tools:layout="@layout/fragment_recipe_list_screen">
+        <action
+            android:id="@+id/action_recipeListFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment"
+            app:popUpTo="@id/recipeListFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/starredListFragment"
         android:name="io.github.luteoos.cookrepo.view.fragment.StarredListFragment"
         android:label="StarredListFragment"
-        tools:layout="@layout/fragment_starred_list_screen"/>
+        tools:layout="@layout/fragment_starred_list_screen">
+        <action
+            android:id="@+id/action_starredListFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment"
+            app:popUpTo="@id/starredListFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="io.github.luteoos.cookrepo.view.fragment.RecipeFragment"
+        android:label="RecipeFragment"
+        tools:layout="@layout/fragment_recipe_screen">
+        <argument
+            android:name="recipeId"
+            app:argType="string" />
+    </fragment>
 </navigation>

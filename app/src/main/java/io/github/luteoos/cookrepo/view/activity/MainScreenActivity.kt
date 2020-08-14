@@ -26,15 +26,6 @@ class MainScreenActivity : ActivityVM<MainScreenViewModel>(R.layout.activity_mai
             }
             return@setOnNavigationItemSelectedListener true
         }
-
-//        textView3.setOnClickListener {
-//            this.findNavController(R.id.mainFragment).let {nav ->
-//                if(nav.currentDestination?.id == R.id.recipeListFragment)
-//                    nav.navigate(R.id.userProfileFragment) //bundle here
-//                else
-//                    nav.navigate(R.id.recipeListFragment)
-//            }
-//        }
     }
 
     private fun openFragment(fragmentId: Int) {

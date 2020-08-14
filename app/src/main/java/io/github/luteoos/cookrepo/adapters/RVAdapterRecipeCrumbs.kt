@@ -3,7 +3,6 @@ package io.github.luteoos.cookrepo.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Spinner
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -58,12 +57,11 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class IngredientVH(view: View) : RecyclerView.ViewHolder(view) {
         private val tvIngredientName = view.findViewById<TextInputLayout>(R.id.ingredientNameInput)
         private val tvIngredientAmount = view.findViewById<TextInputLayout>(R.id.ingredientAmountInput)
-        private val spinnerIngredientMeasure = view.findViewById<Spinner>(R.id.spinnerIngredientMeasure)
 
         fun setIngredientData(data: RecipeCrumb.IngredientAmountViewData) {
             tvIngredientAmount.editText?.setText(data.amount)
             tvIngredientName.editText?.setText(data.ingredient.name)
-            spinnerIngredientMeasure.prompt = data.unit
+//            spinnerIngredientMeasure.prompt = data.unit
             // TODO modify to update only 1 value, consider smth diffrent than spinner
             tvIngredientName.editText?.doOnTextChanged { _, _, _, _ ->
                 updateData(data)
@@ -76,8 +74,7 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private fun updateData(data: RecipeCrumb.IngredientAmountViewData) {
             data.copy(
                 ingredient = data.ingredient.copy(name = tvIngredientName.editText?.text.toString()),
-                amount = tvIngredientAmount.editText?.text.toString().toIntOrNull() ?: 0,
-                unit = spinnerIngredientMeasure.prompt.toString()
+                amount = tvIngredientAmount.editText?.text.toString()
             )
         }
     }

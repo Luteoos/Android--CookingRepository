@@ -1,5 +1,6 @@
 package io.github.luteoos.cookrepo.di
 
+import io.github.luteoos.cookrepo.adapters.RVAdapterRecipeCrumbs
 import io.github.luteoos.cookrepo.adapters.RVAdapterRecipes
 import io.github.luteoos.cookrepo.repository.RecipeRepository
 import io.github.luteoos.cookrepo.repository.RecipeRepositoryInterface
@@ -17,14 +18,15 @@ val sessionPreferenceModule = module {
     single { Session(androidContext()) }
 }
 
-val mainScreenModule = module {
+val recipeModule = module {
     viewModel { MainScreenViewModel(get()) }
-    factory { RVAdapterRecipes(null) }
     factory <RecipeRepositoryInterface> { RecipeRepository() }
+    factory { RVAdapterRecipeCrumbs() }
+    factory { RVAdapterRecipes(null) }
 }
 
 val userProfileModule = module {
     viewModel { UserProfileViewModel() }
 }
 
-val koinModules = listOf(mainScreenModule, sessionPreferenceModule, userProfileModule)
+val koinModules = listOf(recipeModule, sessionPreferenceModule, userProfileModule)
