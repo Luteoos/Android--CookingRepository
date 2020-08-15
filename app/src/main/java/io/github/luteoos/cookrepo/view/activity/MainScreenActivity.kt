@@ -12,9 +12,6 @@ import javax.inject.Inject
 
 class MainScreenActivity : ActivityVM<MainScreenViewModel>(R.layout.activity_main_screen) {
 
-    @Inject
-    lateinit var provider: ViewModelProviderFactory
-
     override val viewModel: MainScreenViewModel by lazy { ViewModelProvider(this, provider).get(MainScreenViewModel::class.java) } // ViewModelProviders.of(this, provider).get(MainScreenViewModel::class.java) } // by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {

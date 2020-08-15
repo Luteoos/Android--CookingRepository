@@ -10,14 +10,11 @@ import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.adapters.RVAdapterRecipes
 import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
-import io.github.luteoos.cookrepo.viewmodel.factory.ViewModelProviderFactory
 import kotlinx.android.synthetic.main.fragment_starred_list_screen.*
 import javax.inject.Inject
 
 class StarredListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_starred_list_screen) {
 
-    @Inject
-    lateinit var provider: ViewModelProviderFactory
     override val viewModel: MainScreenViewModel by lazy { ViewModelProvider(requireActivity(), provider).get(MainScreenViewModel::class.java) }
     @Inject
     lateinit var rvAdapter: RVAdapterRecipes
