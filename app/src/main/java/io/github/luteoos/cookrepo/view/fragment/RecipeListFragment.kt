@@ -1,7 +1,5 @@
 package io.github.luteoos.cookrepo.view.fragment
 
-// import org.koin.android.ext.android.inject
-// import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +18,7 @@ import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
 import io.github.luteoos.cookrepo.viewmodel.factory.ViewModelProviderFactory
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_recipe_list_screen.*
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_list_screen) {

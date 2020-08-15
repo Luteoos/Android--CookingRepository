@@ -4,8 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.github.luteoos.cookrepo.baseAbstract.BaseViewModel
 import io.github.luteoos.cookrepo.data.realm.RecipeRealm
+import io.github.luteoos.cookrepo.data.repo.RecipeRepoData
+import io.github.luteoos.cookrepo.data.view.RecipeCrumb
 import io.github.luteoos.cookrepo.data.view.RecipeViewData
 import io.github.luteoos.cookrepo.repository.RecipeRepositoryInterface
+import io.github.luteoos.cookrepo.utils.Parameters
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.RealmResults
@@ -14,7 +17,7 @@ import javax.inject.Inject
 
 class MainScreenViewModel
 @Inject
-constructor(val recipeRepo: RecipeRepositoryInterface) : BaseViewModel() {
+constructor(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel() {
 
     private val subscribers = CompositeDisposable()
     private val recipes = MutableLiveData<RealmResults<RecipeRealm>>()
@@ -22,18 +25,20 @@ constructor(val recipeRepo: RecipeRepositoryInterface) : BaseViewModel() {
 
     init {
         Timber.d(" ${this.javaClass.canonicalName} View model created  hashCode ${this.hashCode()}")
-        recipeRepo.getRecipesObservable()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                if (it.isSuccess)
-                    recipes.value = it.result
-            }
-        recipeRepo.getRecipeObservable()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                if (it.isSuccess)
-                    recipe.value = it.result
-            }
+        subscribers.addAll(
+            recipeRepo.getRecipesObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (it.isSuccess)
+                        recipes.value = it.result
+                },
+            recipeRepo.getRecipeObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    if (it.isSuccess)
+                        recipe.value = mapRecipeToViewData(it.result!!)
+                }
+        )
     }
 
     fun getRecipesLiveData(): LiveData<RealmResults<RecipeRealm>> = recipes
@@ -56,5 +61,20 @@ constructor(val recipeRepo: RecipeRepositoryInterface) : BaseViewModel() {
         subscribers.dispose()
         recipeRepo.clear()
         super.onCleared()
+    }
+
+    private fun mapRecipeToViewData(data: RecipeRepoData): RecipeViewData {
+        return RecipeViewData(
+            data.id,
+            data.name,
+            data.description,
+            data.starred,
+            mutableListOf<RecipeCrumb>().apply {
+                add(RecipeCrumb.RecyclerViewHeader(Parameters.HEADER_TYPE_INGREDIENT))
+                addAll(data.ingredientCrumbList)
+                add(RecipeCrumb.RecyclerViewHeader(Parameters.HEADER_TYPE_STEP))
+                addAll(data.stepCrumbList)
+            }
+        )
     }
 }

@@ -15,10 +15,17 @@ class RecipeCrumbDiffUtilCallback(private val old: MutableList<RecipeCrumb>, pri
                     is RecipeCrumb.RecipeStepViewData -> when (new) {
                         is RecipeCrumb.RecipeStepViewData -> new.id == old.id
                         is RecipeCrumb.IngredientAmountViewData -> false
+                        is RecipeCrumb.RecyclerViewHeader -> false
                     }
                     is RecipeCrumb.IngredientAmountViewData -> when (new) {
                         is RecipeCrumb.IngredientAmountViewData -> new.id == old.id
                         is RecipeCrumb.RecipeStepViewData -> false
+                        is RecipeCrumb.RecyclerViewHeader -> false
+                    }
+                    is RecipeCrumb.RecyclerViewHeader -> when (new) {
+                        is RecipeCrumb.RecipeStepViewData -> false
+                        is RecipeCrumb.IngredientAmountViewData -> false
+                        is RecipeCrumb.RecyclerViewHeader -> old.hashCode() == new.hashCode()
                     }
                 }
             }
@@ -32,10 +39,17 @@ class RecipeCrumbDiffUtilCallback(private val old: MutableList<RecipeCrumb>, pri
                     is RecipeCrumb.RecipeStepViewData -> when (new) {
                         is RecipeCrumb.RecipeStepViewData -> new == old
                         is RecipeCrumb.IngredientAmountViewData -> false
+                        is RecipeCrumb.RecyclerViewHeader -> false
                     }
                     is RecipeCrumb.IngredientAmountViewData -> when (new) {
                         is RecipeCrumb.IngredientAmountViewData -> new == old
                         is RecipeCrumb.RecipeStepViewData -> false
+                        is RecipeCrumb.RecyclerViewHeader -> false
+                    }
+                    is RecipeCrumb.RecyclerViewHeader -> when (new) {
+                        is RecipeCrumb.RecipeStepViewData -> false
+                        is RecipeCrumb.IngredientAmountViewData -> false
+                        is RecipeCrumb.RecyclerViewHeader -> old == new
                     }
                 }
             }

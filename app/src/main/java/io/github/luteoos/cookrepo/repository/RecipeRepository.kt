@@ -3,9 +3,9 @@ package io.github.luteoos.cookrepo.repository
 import io.github.luteoos.cookrepo.data.realm.IngredientAmountRealm
 import io.github.luteoos.cookrepo.data.realm.RecipeRealm
 import io.github.luteoos.cookrepo.data.realm.RecipeStepRealm
+import io.github.luteoos.cookrepo.data.repo.RecipeRepoData
 import io.github.luteoos.cookrepo.data.view.IngredientViewData
 import io.github.luteoos.cookrepo.data.view.RecipeCrumb
-import io.github.luteoos.cookrepo.data.view.RecipeViewData
 import io.github.luteoos.cookrepo.data.wrapper.RecipeWrapper
 import io.github.luteoos.cookrepo.data.wrapper.RecipesRealmWrapper
 import io.reactivex.rxjava3.core.Flowable
@@ -29,7 +29,7 @@ class RecipeRepository : RecipeRepositoryInterface {
         getRealm().let {
             Flowable
                 .just(
-                    it.where(RecipeRealm::class.java)
+                    it.where(RecipeRealm::class.java) // Work around bc Realm doesnt support RxJava3 yet.
                         .equalTo("id", id)
                         .findFirst()
                 )
@@ -38,12 +38,13 @@ class RecipeRepository : RecipeRepositoryInterface {
                         throw Exception("No recipe found")
                     else
                         it.copyFromRealm(result).let { recipeRealm ->
-                            RecipeViewData(
+                            RecipeRepoData(
                                 result.id,
                                 recipeRealm.name,
                                 recipeRealm.description,
                                 recipeRealm.starred,
-                                mapToRecipeCrumb(recipeRealm.ingredients, recipeRealm.steps)
+                                mapIngredientToRecipeCrumb(recipeRealm.ingredients),
+                                mapStepToRecipeCrumb(recipeRealm.steps)
                             )
                         }
                 }
@@ -117,7 +118,7 @@ class RecipeRepository : RecipeRepositoryInterface {
         }
     }
 
-    private fun mapToRecipeCrumb(ingredients: RealmList<IngredientAmountRealm>, steps: RealmList<RecipeStepRealm>): MutableList<RecipeCrumb> {
+    private fun mapIngredientToRecipeCrumb(ingredients: RealmList<IngredientAmountRealm>): MutableList<RecipeCrumb> {
         return mutableListOf<RecipeCrumb>().also { list ->
             list.addAll(
                 ingredients.map { amountRealm ->
@@ -130,6 +131,11 @@ class RecipeRepository : RecipeRepositoryInterface {
                     } ?: throw Exception("No ingredient data")
                 }
             )
+        }
+    }
+
+    private fun mapStepToRecipeCrumb(steps: RealmList<RecipeStepRealm>): MutableList<RecipeCrumb> {
+        return mutableListOf<RecipeCrumb>().also { list ->
             list.addAll(
                 steps.map {
                     RecipeCrumb.RecipeStepViewData(it.id, it.text)
