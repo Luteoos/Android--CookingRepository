@@ -11,6 +11,7 @@ import io.github.luteoos.cookrepo.adapters.RVAdapterRecipes
 import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
 import kotlinx.android.synthetic.main.fragment_starred_list_screen.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class StarredListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_starred_list_screen) {
@@ -36,12 +37,17 @@ class StarredListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_st
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(this@StarredListFragment.context)
         }
-        rvAdapter.onClick.subscribe { id ->
-            with(findNavController()) {
-                if (currentDestination?.id == R.id.recipeListFragment)
-                    navigate(StarredListFragmentDirections.actionStarredListFragmentToRecipeFragment(id))
+        rvAdapter.onClick.subscribe(
+            { id ->
+                with(findNavController()) {
+                    if (currentDestination?.id == R.id.starredListFragment)
+                        navigate(StarredListFragmentDirections.actionStarredListFragmentToRecipeFragment(id))
+                }
+            },
+            {
+                Timber.e(it)
             }
-        }
+        )
     }
 
     private fun setBindings() {

@@ -2,14 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="6">
+    android:orientation="horizontal">
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/ingredientCheckBox"
+        android:layout_width="60dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        />
+
+    <ImageButton
+        android:id="@+id/ingredientRemoveButton"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:src="@drawable/ic_delete_forever_24px"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ingredientAmountInput"
-        android:layout_width="140dp"
+        android:layout_width="70dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
         android:padding="4dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -22,8 +37,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/ingredientNameInput"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_height="wrap_content"
         android:padding="4dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -32,4 +46,5 @@
             android:hint="@string/ingredient_hint"
             android:inputType="textAutoCorrect" />
     </com.google.android.material.textfield.TextInputLayout>
+
 </LinearLayout>

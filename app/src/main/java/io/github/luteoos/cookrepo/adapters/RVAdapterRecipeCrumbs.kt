@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.DiffUtil
@@ -17,6 +19,7 @@ import io.reactivex.rxjava3.subjects.PublishSubject
 
 class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var editable = false
     private val data = mutableListOf<RecipeCrumb>()
     val itemUpdate: PublishSubject<RecipeCrumb> = PublishSubject.create()
 
@@ -52,9 +55,12 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
+    fun setEditable(editable: Boolean) {
+        this.editable = editable
+    }
+
     fun updateData(new: MutableList<RecipeCrumb>) {
-        // TODO add DiffUtil here
-        val old = data
+        val old = data.toMutableList() // .toMutableList needed to copy value not assign by ref
         data.clear()
         data.addAll(new)
         DiffUtil.calculateDiff(RecipeCrumbDiffUtilCallback(old, data)).dispatchUpdatesTo(this)
@@ -66,13 +72,14 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val btnHeader = view.findViewById<Button>(R.id.btnRecipeHeader)
 
         fun setHeaderData(data: RecipeCrumb.RecyclerViewHeader) {
-            when (data.type) {
-                Parameters.HEADER_TYPE_STEP -> {
-                    tvHeaderTitle.text = itemView.context.getString(R.string.profile)
-                }
-                Parameters.HEADER_TYPE_INGREDIENT -> {
-                    tvHeaderTitle.text = "INGREDIENTS"
-                }
+            btnHeader.visibility = if (editable) View.VISIBLE else View.GONE
+            btnHeader.setOnClickListener {
+                // here send itemupdate recycleheaderedata and later handle creating proper data
+            }
+            tvHeaderTitle.text = when (data.type) {
+                Parameters.HEADER_TYPE_STEP -> itemView.context.getString(R.string.steps_header)
+                Parameters.HEADER_TYPE_INGREDIENT -> itemView.context.getString(R.string.ingredients_header)
+                else -> throw Exception("No recyclerViewHeader type found")
             }
         }
     }
@@ -80,33 +87,50 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class IngredientVH(view: View) : RecyclerView.ViewHolder(view) {
         private val tvIngredientName = view.findViewById<TextInputLayout>(R.id.ingredientNameInput)
         private val tvIngredientAmount = view.findViewById<TextInputLayout>(R.id.ingredientAmountInput)
+        private val btnIngredientRemove = view.findViewById<ImageButton>(R.id.ingredientRemoveButton)
+        private val checkBoxIngredient = view.findViewById<CheckBox>(R.id.ingredientCheckBox)
 
         fun setIngredientData(data: RecipeCrumb.IngredientAmountViewData) {
+            checkBoxIngredient.visibility = if (editable) View.GONE else View.VISIBLE
+            btnIngredientRemove.visibility = if (editable) View.VISIBLE else View.GONE
+            tvIngredientAmount.isEnabled = editable
+            tvIngredientName.isEnabled = editable
             tvIngredientAmount.editText?.setText(data.amount)
             tvIngredientName.editText?.setText(data.ingredient.name)
-//            spinnerIngredientMeasure.prompt = data.unit
-            // TODO modify to update only 1 value, consider smth diffrent than spinner
+
+            btnIngredientRemove.setOnClickListener {
+                // here strream itemremoved
+            }
             tvIngredientName.editText?.doOnTextChanged { _, _, _, _ ->
-                updateData(data)
+                itemUpdate.onNext(updateData(data))
             }
             tvIngredientAmount.editText?.doOnTextChanged { _, _, _, _ ->
-                updateData(data)
+                itemUpdate.onNext(updateData(data))
             }
         }
 
-        private fun updateData(data: RecipeCrumb.IngredientAmountViewData) {
+        private fun updateData(data: RecipeCrumb.IngredientAmountViewData) =
             data.copy(
                 ingredient = data.ingredient.copy(name = tvIngredientName.editText?.text.toString()),
                 amount = tvIngredientAmount.editText?.text.toString()
             )
-        }
     }
 
     inner class RecipeStepVH(view: View) : RecyclerView.ViewHolder(view) {
+
         private val tvStep = view.findViewById<TextInputLayout>(R.id.recipeStepInput)
+        private val btnRecipeRemove = view.findViewById<ImageButton>(R.id.recipeRemoveButton)
+        private val checkBoxRecipe = view.findViewById<CheckBox>(R.id.recipeCheckBox)
 
         fun setStepData(data: RecipeCrumb.RecipeStepViewData) {
+            checkBoxRecipe.visibility = if (editable) View.GONE else View.VISIBLE
+            btnRecipeRemove.visibility = if (editable) View.VISIBLE else View.GONE
+            tvStep.isEnabled = editable
             tvStep.editText?.setText(data.text)
+
+            btnRecipeRemove.setOnClickListener {
+                // here strream itemremoved
+            }
             tvStep.editText?.doOnTextChanged { text, _, _, _ ->
                 itemUpdate.onNext(data.copy(text = text.toString()))
             }

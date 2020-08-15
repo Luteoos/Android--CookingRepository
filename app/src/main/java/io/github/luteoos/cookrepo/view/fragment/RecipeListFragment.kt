@@ -17,7 +17,8 @@ import io.github.luteoos.cookrepo.utils.Session
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_recipe_list_screen.*
-import java.util.*
+import timber.log.Timber
+import java.util.UUID
 import javax.inject.Inject
 
 class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_list_screen) {
@@ -45,12 +46,17 @@ class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(this@RecipeListFragment.context)
         }
-        rvAdapter.onClick.subscribe { id ->
-            with(findNavController()) {
-                if (currentDestination?.id == R.id.recipeListFragment)
-                    navigate(RecipeListFragmentDirections.actionRecipeListFragmentToRecipeFragment(id))
+        rvAdapter.onClick.subscribe(
+            { id ->
+                with(findNavController()) {
+                    if (currentDestination?.id == R.id.recipeListFragment)
+                        navigate(RecipeListFragmentDirections.actionRecipeListFragmentToRecipeFragment(id))
+                }
+            },
+            {
+                Timber.e(it)
             }
-        }
+        )
     }
 
     private fun setBindings() {
@@ -69,6 +75,10 @@ class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
 //            a.starred = true
             Realm.getDefaultInstance().executeTransaction {
                 it.copyToRealmOrUpdate(a)
+            }
+            with(findNavController()) {
+                if (currentDestination?.id == R.id.recipeListFragment)
+                    navigate(RecipeListFragmentDirections.actionRecipeListFragmentToRecipeEditFragment(a.id))
             }
         }
     }

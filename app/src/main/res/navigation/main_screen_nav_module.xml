@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_screen_nav_module"
     app:startDestination="@id/recipeListFragment">
-
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="io.github.luteoos.cookrepo.view.fragment.UserProfileFragment"
@@ -19,6 +18,10 @@
             android:id="@+id/action_recipeListFragment_to_recipeFragment"
             app:destination="@id/recipeFragment"
             app:popUpTo="@id/recipeListFragment"/>
+        <action
+            android:id="@+id/action_recipeListFragment_to_recipeEditFragment"
+            app:destination="@id/recipeEditFragment"
+            app:popUpTo="@id/recipeListFragment"/>
     </fragment>
     <fragment
         android:id="@+id/starredListFragment"
@@ -30,6 +33,19 @@
             app:destination="@id/recipeFragment"
             app:popUpTo="@id/starredListFragment"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/recipeEditFragment"
+        android:name="io.github.luteoos.cookrepo.view.fragment.RecipeEditFragment"
+        android:label="RecipeEditFragment"
+        tools:layout="@layout/fragment_recipe_edit_screen">
+        <argument
+            android:name="recipeId"
+            app:argType="string" />
+<!--        <action-->
+<!--            app:popUpTo=""-->
+    </fragment>
+
     <fragment
         android:id="@+id/recipeFragment"
         android:name="io.github.luteoos.cookrepo.view.fragment.RecipeFragment"
@@ -38,5 +54,9 @@
         <argument
             android:name="recipeId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_recipeFragment_to_recipeEditFragment"
+            app:destination="@id/recipeEditFragment"
+            app:popUpTo="@id/recipeFragment"/>
     </fragment>
 </navigation>

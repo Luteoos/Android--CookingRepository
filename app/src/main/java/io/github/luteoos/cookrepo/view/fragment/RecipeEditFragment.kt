@@ -12,15 +12,15 @@ import io.github.luteoos.cookrepo.adapters.RVAdapterRecipeCrumbs
 import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
 import io.github.luteoos.cookrepo.data.view.RecipeViewData
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
-import kotlinx.android.synthetic.main.fragment_recipe_screen.*
+import kotlinx.android.synthetic.main.fragment_recipe_edit_screen.*
 import javax.inject.Inject
 
-class RecipeFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_screen) {
+class RecipeEditFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_edit_screen) {
 
     override val viewModel: MainScreenViewModel by lazy { ViewModelProvider(requireActivity(), provider).get(MainScreenViewModel::class.java) }
     @Inject
     lateinit var rvAdapter: RVAdapterRecipeCrumbs
-    private val args: RecipeFragmentArgs by navArgs()
+    private val args: RecipeEditFragmentArgs by navArgs()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -35,18 +35,17 @@ class RecipeFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_
 
     private fun setRV() {
         rvRecipeCrumbs.apply {
-            rvAdapter.setEditable(false)
-            addItemDecoration(DividerItemDecoration(this@RecipeFragment.context, LinearLayoutManager.VERTICAL))
+            rvAdapter.setEditable(true)
+            addItemDecoration(DividerItemDecoration(this@RecipeEditFragment.context, LinearLayoutManager.VERTICAL))
             adapter = rvAdapter
-            layoutManager = LinearLayoutManager(this@RecipeFragment.context)
+            layoutManager = LinearLayoutManager(this@RecipeEditFragment.context)
         }
     }
 
     private fun setBindings() {
-        btnEdit.setOnClickListener {
+        btnSave.setOnClickListener {
             with(findNavController()) {
-                if (currentDestination?.id == R.id.recipeFragment)
-                    navigate(RecipeFragmentDirections.actionRecipeFragmentToRecipeEditFragment(args.recipeId))
+                popBackStack()
             }
         }
         viewModel.getRecipeLiveData().observe(
@@ -59,7 +58,7 @@ class RecipeFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_
 
     private fun setViewData(data: RecipeViewData) {
         rvAdapter.updateData(data.crumbList)
-        tvRecipeTitle.text = data.name
-        tvRecipeDesc.text = data.description
+        tvRecipeTitle.editText?.setText(data.name)
+        tvRecipeDesc.editText?.setText(data.description)
     }
 }

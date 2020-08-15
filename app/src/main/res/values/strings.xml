@@ -2,9 +2,18 @@
     <string name="template_author">Mateusz Lutecki</string>
     <string name="profile">Profile</string>
     <string name="favs">Favourites</string>
-    <string name="recipes">Recipies</string>
+    <string name="recipes">Recipes</string>
     <string name="username_hint">Username</string>
-    <string name="recipe_step_hint">recipe step hint</string>
-    <string name="ingredient_hint">ingredient hint</string>
-    <string name="ingredient_amount_hint">ingredientr amount</string>
+
+    <string name="recipe_step_hint">Step</string>
+    <string name="ingredient_hint">Ingredient</string>
+    <string name="ingredient_amount_hint">Vol</string>
+
+    <string name="add">ADD</string>
+    <string name="ingredients_header">Ingredients</string>
+    <string name="steps_header">Steps</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="recipe_title_hint">Title</string>
+    <string name="recipe_desc_hint">Description</string>
 </resources>
