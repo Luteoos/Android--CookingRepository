@@ -11,6 +11,7 @@ sealed class RecipeCrumb {
         val text: String
     ) : RecipeCrumb()
     data class RecyclerViewHeader(
-        val type: String
+        val type: String,
+        val extra: String = ""
     ) : RecipeCrumb()
 }

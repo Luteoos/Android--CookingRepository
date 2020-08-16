@@ -42,8 +42,6 @@
         <argument
             android:name="recipeId"
             app:argType="string" />
-<!--        <action-->
-<!--            app:popUpTo=""-->
     </fragment>
 
     <fragment

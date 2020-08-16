@@ -6,6 +6,7 @@ import io.github.luteoos.cookrepo.adapters.RVAdapterRecipeCrumbs
 import io.github.luteoos.cookrepo.adapters.RVAdapterRecipes
 import io.github.luteoos.cookrepo.repository.RecipeRepository
 import io.github.luteoos.cookrepo.repository.RecipeRepositoryInterface
+import io.github.luteoos.cookrepo.utils.Session
 
 @Module
 class MainModule {
@@ -24,7 +25,7 @@ class MainModule {
 
     @MainScope
     @Provides
-    fun provideRecipeRepositoryInterface(): RecipeRepositoryInterface {
-        return RecipeRepository()
+    fun provideRecipeRepositoryInterface(session: Session): RecipeRepositoryInterface {
+        return RecipeRepository(session = session)
     }
 }

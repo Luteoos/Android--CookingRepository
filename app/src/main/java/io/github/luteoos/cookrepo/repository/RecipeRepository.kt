@@ -1,6 +1,7 @@
 package io.github.luteoos.cookrepo.repository
 
 import io.github.luteoos.cookrepo.data.realm.IngredientAmountRealm
+import io.github.luteoos.cookrepo.data.realm.IngredientRealm
 import io.github.luteoos.cookrepo.data.realm.RecipeRealm
 import io.github.luteoos.cookrepo.data.realm.RecipeStepRealm
 import io.github.luteoos.cookrepo.data.repo.RecipeRepoData
@@ -8,6 +9,8 @@ import io.github.luteoos.cookrepo.data.view.IngredientViewData
 import io.github.luteoos.cookrepo.data.view.RecipeCrumb
 import io.github.luteoos.cookrepo.data.wrapper.RecipeWrapper
 import io.github.luteoos.cookrepo.data.wrapper.RecipesRealmWrapper
+import io.github.luteoos.cookrepo.utils.Session
+import io.github.luteoos.cookrepo.utils.getFirst
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
@@ -15,7 +18,7 @@ import io.realm.Realm
 import io.realm.RealmList
 import timber.log.Timber
 
-class RecipeRepository : RecipeRepositoryInterface {
+class RecipeRepository(private val session: Session) : RecipeRepositoryInterface {
 
     private val streamRecipes: PublishSubject<RecipesRealmWrapper> = PublishSubject.create()
     private val streamRecipe: PublishSubject<RecipeWrapper> = PublishSubject.create()
@@ -103,6 +106,66 @@ class RecipeRepository : RecipeRepositoryInterface {
                     }
                 )
         }
+    }
+
+    override fun createRecipe(): String {
+        val recipe = RecipeRealm().create(author = session.username)
+        getRealm().executeTransaction {
+            it.copyToRealm(recipe)
+        }
+        return recipe.id
+    }
+
+    override fun createIngredientAmount(id: String) {
+        getRealm().executeTransaction {
+            it.getFirst(id, RecipeRealm::class.java)?.ingredients?.add(
+                IngredientAmountRealm().create(
+                    IngredientRealm().create(author = session.username),
+                    author = session.username
+                )
+            )
+        }
+        getRecipe(id)
+    }
+
+    override fun createStep(id: String) {
+        getRealm().executeTransaction {
+            it.getFirst(id, RecipeRealm::class.java)?.steps?.add(
+                RecipeStepRealm().create(author = session.username)
+            )
+        }
+        getRecipe(id)
+    }
+
+    override fun updateIngredientAmount(data: RecipeCrumb.IngredientAmountViewData) {
+        getRealm().executeTransaction {
+            it.getFirst(data.id, IngredientAmountRealm::class.java)?.let { amount ->
+                amount.amount = data.amount
+                amount.ingredient?.name = data.ingredient.name
+            }
+        }
+    }
+
+    override fun updateStep(data: RecipeCrumb.RecipeStepViewData) {
+        getRealm().executeTransaction {
+            it.getFirst(data.id, RecipeStepRealm::class.java)?.let { step ->
+                step.text = data.text
+            }
+        }
+    }
+
+    override fun deleteIngredientAmount(id: String, recipeId: String) {
+        getRealm().executeTransaction {
+            it.getFirst(id, IngredientAmountRealm::class.java)?.cascadeDelete()
+        }
+        getRecipe(recipeId)
+    }
+
+    override fun deleteStep(id: String, recipeId: String) {
+        getRealm().executeTransaction {
+            it.getFirst(id, RecipeStepRealm::class.java)?.deleteFromRealm()
+        }
+        getRecipe(recipeId)
     }
 
     override fun clear() {

@@ -8,6 +8,8 @@ import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputLayout
@@ -15,13 +17,13 @@ import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.adapters.diffutil.RecipeCrumbDiffUtilCallback
 import io.github.luteoos.cookrepo.data.view.RecipeCrumb
 import io.github.luteoos.cookrepo.utils.Parameters
-import io.reactivex.rxjava3.subjects.PublishSubject
+import io.github.luteoos.mvvmbaselib.Event
 
 class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var editable = false
     private val data = mutableListOf<RecipeCrumb>()
-    val itemUpdate: PublishSubject<RecipeCrumb> = PublishSubject.create()
+    private val itemUpdate = MutableLiveData<Event<Pair<RecipeCrumb, String>>>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -55,6 +57,8 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
+    fun getItemUpdate(): LiveData<Event<Pair<RecipeCrumb, String>>> = itemUpdate
+
     fun setEditable(editable: Boolean) {
         this.editable = editable
     }
@@ -66,7 +70,6 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         DiffUtil.calculateDiff(RecipeCrumbDiffUtilCallback(old, data)).dispatchUpdatesTo(this)
     }
 
-    // TODO fdinish it, add button visibility and correct texts, maybe color background
     inner class HeaderVH(view: View) : RecyclerView.ViewHolder(view) {
         private val tvHeaderTitle = view.findViewById<TextView>(R.id.tvRecipeHeader)
         private val btnHeader = view.findViewById<Button>(R.id.btnRecipeHeader)
@@ -74,7 +77,7 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun setHeaderData(data: RecipeCrumb.RecyclerViewHeader) {
             btnHeader.visibility = if (editable) View.VISIBLE else View.GONE
             btnHeader.setOnClickListener {
-                // here send itemupdate recycleheaderedata and later handle creating proper data
+                itemUpdate.value = Event(data.copy() to Parameters.CRUMB_EXTRA_ADD)
             }
             tvHeaderTitle.text = when (data.type) {
                 Parameters.HEADER_TYPE_STEP -> itemView.context.getString(R.string.steps_header)
@@ -99,13 +102,13 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             tvIngredientName.editText?.setText(data.ingredient.name)
 
             btnIngredientRemove.setOnClickListener {
-                // here strream itemremoved
+                itemUpdate.value = Event(data.copy() to Parameters.CRUMB_EXTRA_DELETE)
             }
             tvIngredientName.editText?.doOnTextChanged { _, _, _, _ ->
-                itemUpdate.onNext(updateData(data))
+                itemUpdate.value = Event(updateData(data) to Parameters.CRUMB_EXTRA_EDIT)
             }
             tvIngredientAmount.editText?.doOnTextChanged { _, _, _, _ ->
-                itemUpdate.onNext(updateData(data))
+                itemUpdate.value = Event(updateData(data) to Parameters.CRUMB_EXTRA_EDIT)
             }
         }
 
@@ -117,7 +120,6 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     inner class RecipeStepVH(view: View) : RecyclerView.ViewHolder(view) {
-
         private val tvStep = view.findViewById<TextInputLayout>(R.id.recipeStepInput)
         private val btnRecipeRemove = view.findViewById<ImageButton>(R.id.recipeRemoveButton)
         private val checkBoxRecipe = view.findViewById<CheckBox>(R.id.recipeCheckBox)
@@ -129,10 +131,10 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             tvStep.editText?.setText(data.text)
 
             btnRecipeRemove.setOnClickListener {
-                // here strream itemremoved
+                itemUpdate.value = Event(data.copy() to Parameters.CRUMB_EXTRA_DELETE)
             }
             tvStep.editText?.doOnTextChanged { text, _, _, _ ->
-                itemUpdate.onNext(data.copy(text = text.toString()))
+                itemUpdate.value = Event(data.copy(text = text.toString()) to Parameters.CRUMB_EXTRA_EDIT)
             }
         }
     }

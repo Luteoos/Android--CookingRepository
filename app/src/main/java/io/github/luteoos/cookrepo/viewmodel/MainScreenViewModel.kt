@@ -57,6 +57,30 @@ constructor(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel()
         recipeRepo.getRecipesStarred()
     }
 
+    fun createRecipe() =
+        recipeRepo.createRecipe()
+
+    fun updateRecipe(id: String, crumb: RecipeCrumb, extra: String) {
+        when (crumb) {
+            is RecipeCrumb.IngredientAmountViewData -> when (extra) {
+                Parameters.CRUMB_EXTRA_EDIT -> recipeRepo.updateIngredientAmount(crumb)
+                Parameters.CRUMB_EXTRA_DELETE -> recipeRepo.deleteIngredientAmount(crumb.id, id)
+            }
+            is RecipeCrumb.RecipeStepViewData -> when (extra) {
+                Parameters.CRUMB_EXTRA_EDIT -> recipeRepo.updateStep(crumb)
+                Parameters.CRUMB_EXTRA_DELETE -> recipeRepo.deleteStep(crumb.id, id)
+            }
+            is RecipeCrumb.RecyclerViewHeader -> when (crumb.type) {
+                Parameters.HEADER_TYPE_STEP -> when (extra) {
+                    Parameters.CRUMB_EXTRA_ADD -> recipeRepo.createStep(id)
+                }
+                Parameters.HEADER_TYPE_INGREDIENT -> when (extra) {
+                    Parameters.CRUMB_EXTRA_ADD -> recipeRepo.createIngredientAmount(id)
+                }
+            }
+        }
+    }
+
     override fun onCleared() {
         subscribers.dispose()
         recipeRepo.clear()

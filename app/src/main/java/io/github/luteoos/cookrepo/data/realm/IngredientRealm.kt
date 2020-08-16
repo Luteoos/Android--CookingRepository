@@ -13,7 +13,7 @@ open class IngredientRealm : RealmObject(), BaseRealmInterface {
 
     var name: String? = null
 
-    fun create(name: String, author: String): IngredientRealm {
+    fun create(name: String = "", author: String): IngredientRealm {
         this.create(author)
         this.name = name
         return this

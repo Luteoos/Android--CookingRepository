@@ -5,6 +5,7 @@
     <color name="colorPrimaryDark">#424242</color>
     <color name="colorAccent">#f0215c</color>
     <color name="colorAccentDark">#f899b4</color>
+    <color name="colorSecondary">#7e082a</color>
     <color name="colorFont">#fcd7e2</color>
     <color name="natalia">#a30b25</color>
     <color name="colorCardViewBackground">#7e082a</color>

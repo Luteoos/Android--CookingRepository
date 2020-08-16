@@ -13,15 +13,23 @@ open class IngredientAmountRealm : RealmObject(), BaseRealmInterface {
     override lateinit var author: String
 
     var ingredient: IngredientRealm? = null
-    var amount: String = "0"
-//    lateinit var unit : String =\
+    var amount: String = ""
     @Ignore
     var isCompleted: Boolean = false
 
-    fun create(ingredientRealm: IngredientRealm, amount: String, author: String): IngredientAmountRealm {
+    fun create(ingredientRealm: IngredientRealm? = null, amount: String = "", author: String): IngredientAmountRealm {
         this.create(author)
-        this.ingredient = ingredientRealm
+        ingredientRealm?.let {
+            this.ingredient = ingredientRealm
+        } ?: run {
+            this.ingredient = IngredientRealm().create(author = author)
+        }
         this.amount = amount
         return this
+    }
+
+    fun cascadeDelete() {
+        ingredient?.deleteFromRealm()
+        deleteFromRealm()
     }
 }

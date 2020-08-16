@@ -16,7 +16,7 @@ open class RecipeStepRealm : RealmObject(), BaseRealmInterface {
     @Ignore
     var isCompleted: Boolean = false
 
-    fun create(text: String, author: String): RecipeStepRealm {
+    fun create(text: String = "", author: String): RecipeStepRealm {
         this.create(author)
         this.text = text
         return this

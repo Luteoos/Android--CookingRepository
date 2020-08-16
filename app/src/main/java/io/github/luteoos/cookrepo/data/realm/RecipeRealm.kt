@@ -18,7 +18,7 @@ open class RecipeRealm : RealmObject(), BaseRealmInterface {
     var steps: RealmList<RecipeStepRealm> = RealmList()
     var starred: Boolean = false
 
-    fun create(author: String, name: String, description: String = ""): RecipeRealm {
+    fun create(author: String, name: String = "", description: String = ""): RecipeRealm {
         this.create(authorName = author)
         this.name = name
         this.description = description
