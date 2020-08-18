@@ -15,7 +15,9 @@ interface RecipeRepositoryInterface {
     fun createRecipe(): String
     fun createIngredientAmount(id: String)
     fun createStep(id: String)
-//    fun updateRecipe()
+    fun updateRecipeTitle(id: String, title: String)
+    fun updateRecipeDesc(id: String, description: String)
+    fun updateRecipeStarred(id: String, starred: Boolean)
     fun updateIngredientAmount(data: RecipeCrumb.IngredientAmountViewData)
     fun updateStep(data: RecipeCrumb.RecipeStepViewData)
 //    fun deleteRecipe(id: String)

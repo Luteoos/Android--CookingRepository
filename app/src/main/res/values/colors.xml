@@ -8,7 +8,7 @@
     <color name="colorSecondary">#7e082a</color>
     <color name="colorFont">#fcd7e2</color>
     <color name="natalia">#a30b25</color>
-    <color name="colorCardViewBackground">#7e082a</color>
+    <color name="colorCardViewBackground">@color/grey_900</color> <!--#7e082a-->
     <color name="colorBackgroundHeader">@color/colorPrimaryDark</color>
     <!--    <color name="colorPrimary">#1b1b1b</color>-->
     <!--    <color name="colorPrimaryLight">#616161</color>-->

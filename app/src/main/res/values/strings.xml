@@ -1,5 +1,6 @@
 <resources>
     <string name="template_author">Mateusz Lutecki</string>
+    <string name="lottie_star_animation_json_path">star_accent.json</string>
     <string name="profile">Profile</string>
     <string name="favs">Favourites</string>
     <string name="recipes">Recipes</string>

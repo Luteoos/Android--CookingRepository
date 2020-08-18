@@ -16,25 +16,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvRecipeTitle"
-        style="@style/HeaderTextView"
-        android:layout_width="match_parent"
+    <com.like.LikeButton
+        android:id="@+id/likeButton"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:padding="4dp"
+        android:layout_marginEnd="8dp"
+        app:icon_size="12dp"
+        app:icon_type="Star"
+        app:layout_constraintBottom_toBottomOf="@+id/btnEdit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEdit" />
+        app:layout_constraintTop_toTopOf="@+id/btnEdit" />
 
-    <TextView
-        style="@style/StandardTextView"
-        android:id="@+id/tvRecipeDesc"
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/title_view"
+        layout="@layout/view_recipe_title"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:layout_width="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRecipeTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/btnEdit" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvRecipeCrumbs"
@@ -42,7 +42,7 @@
         android:layout_height="0dp"
         android:paddingStart="4dp"
         android:paddingEnd="4dp"
-        app:layout_constraintTop_toBottomOf="@id/tvRecipeDesc"
+        app:layout_constraintTop_toBottomOf="@id/title_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

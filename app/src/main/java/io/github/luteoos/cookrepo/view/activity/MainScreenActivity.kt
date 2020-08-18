@@ -1,10 +1,10 @@
 package io.github.luteoos.cookrepo.view.activity
 
+import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.mohamedabulgasem.loadingoverlay.LoadingOverlay
-import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.baseAbstract.ActivityVM
@@ -28,6 +28,11 @@ class MainScreenActivity : ActivityVM<MainScreenViewModel>(R.layout.activity_mai
         setBindings()
     }
 
+    override fun onPause() {
+        super.onPause()
+        hideLoadingOverlay()
+    }
+
     private fun setBindings() {
         with(findNavController(R.id.mainFragment)) { // has to be when View is created because of use FragmentContainer
             bottomNavBar.setupWithNavController(this)
@@ -43,9 +48,12 @@ class MainScreenActivity : ActivityVM<MainScreenViewModel>(R.layout.activity_mai
     private fun handleLoadingOverlay(state: LoadingState) {
         when (state) {
             LoadingState.StartLoading -> loadingOverlay.show()
-            LoadingState.StopLoading ->
-                if (loadingOverlay.isShowing())
-                    loadingOverlay.showFor(Parameters.OVERLAY_DELAY)
+            LoadingState.StopLoading -> hideLoadingOverlay()
         }
+    }
+
+    private fun hideLoadingOverlay() {
+        if (loadingOverlay.isShowing())
+            loadingOverlay.showFor(Parameters.OVERLAY_DELAY)
     }
 }

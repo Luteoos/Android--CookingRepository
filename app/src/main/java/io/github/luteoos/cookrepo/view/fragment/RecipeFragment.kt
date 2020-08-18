@@ -7,6 +7,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.like.LikeButton
+import com.like.OnLikeListener
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.adapters.RVAdapterRecipeCrumbs
@@ -14,6 +16,7 @@ import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
 import io.github.luteoos.cookrepo.data.view.RecipeViewData
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_screen.*
+import kotlinx.android.synthetic.main.view_recipe_title.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,6 +48,15 @@ class RecipeFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_
     }
 
     private fun setBindings() {
+        likeButton.setOnLikeListener(object : OnLikeListener {
+            override fun liked(likeButton: LikeButton?) {
+                viewModel.updateRecipe(args.recipeId, starred = true)
+            }
+
+            override fun unLiked(likeButton: LikeButton?) {
+                viewModel.updateRecipe(args.recipeId, starred = false)
+            }
+        })
         btnEdit.setOnClickListener {
             with(findNavController()) {
                 if (currentDestination?.id == R.id.recipeFragment)
@@ -63,6 +75,7 @@ class RecipeFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_
         rvAdapter.updateData(data.crumbList)
         tvRecipeTitle.text = data.name
         tvRecipeDesc.text = data.description
+        likeButton.isLiked = data.starred
         viewModel.stopLoading()
     }
 }

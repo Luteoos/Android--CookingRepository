@@ -1,6 +1,7 @@
 package io.github.luteoos.cookrepo.view.fragment
 
 import android.os.Bundle
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,6 +15,7 @@ import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
 import io.github.luteoos.cookrepo.data.view.RecipeViewData
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_edit_screen.*
+import kotlinx.android.synthetic.main.view_recipe_title_edit.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -47,8 +49,15 @@ class RecipeEditFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
     private fun setBindings() {
         btnSave.setOnClickListener {
             with(findNavController()) {
+                this@RecipeEditFragment.hideKeyboard(it)
                 popBackStack()
             }
+        }
+        tvRecipeTitle.editText?.doOnTextChanged { text, _, _, _ ->
+            viewModel.updateRecipe(args.recipeId, title = text.toString())
+        }
+        tvRecipeDesc.editText?.doOnTextChanged { text, _, _, _ ->
+            viewModel.updateRecipe(args.recipeId, description = text.toString())
         }
         rvAdapter.getItemUpdate().observe(
             viewLifecycleOwner,

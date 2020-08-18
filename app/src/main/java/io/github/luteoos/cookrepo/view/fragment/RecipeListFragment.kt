@@ -56,25 +56,7 @@ class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
             }
         )
         fabAdd.setOnClickListener {
-            navigateToRecipeEdit()
-//            val a = RecipeRealm().create(session.username, name = "test splash", description = UUID.randomUUID().toString())
-//            a.steps.add(RecipeStepRealm().create("test step 1", session.username))
-//            a.steps.add(RecipeStepRealm().create("test step 2", session.username))
-//            a.ingredients.add(IngredientAmountRealm().create(IngredientRealm().create("test meat 1", session.username), " 10kg", session.username))
-//            a.ingredients.add(IngredientAmountRealm().create(IngredientRealm().create("test meat 2", session.username), " 5kg", session.username))
-// //            a.starred = true
-//            Realm.getDefaultInstance().executeTransaction {
-//                it.copyToRealmOrUpdate(a)
-//            }
-//            with(findNavController()) {
-//                if (currentDestination?.id == R.id.recipeListFragment)
-//                    navigate(
-//                        RecipeListFragmentDirections.actionRecipeListFragmentToRecipeEditFragment(
-// //                        a.id
-//                            viewModel.createRecipe()
-//                        )
-//                    )
-//            }
+            navigateToRecipeCreate()
         }
     }
 
@@ -87,13 +69,13 @@ class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
         }
     }
 
-    private fun navigateToRecipeEdit() {
+    private fun navigateToRecipeCreate() {
         with(findNavController()) {
             if (currentDestination?.id == R.id.recipeListFragment) {
                 viewModel.startLoading()
                 navigate(
                     RecipeListFragmentDirections
-                        .actionRecipeListFragmentToRecipeEditFragment(viewModel.createRecipe())
+                        .actionRecipeListFragmentToRecipeFragment(viewModel.createRecipe())
                 )
             }
         }

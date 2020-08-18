@@ -11,8 +11,8 @@ import io.github.luteoos.cookrepo.data.wrapper.RecipeWrapper
 import io.github.luteoos.cookrepo.data.wrapper.RecipesRealmWrapper
 import io.github.luteoos.cookrepo.utils.Session
 import io.github.luteoos.cookrepo.utils.getFirst
-import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.PublishSubject
 import io.realm.Realm
 import io.realm.RealmList
@@ -30,7 +30,7 @@ class RecipeRepository(private val session: Session) : RecipeRepositoryInterface
 
     override fun getRecipe(id: String) {
         getRealm().let {
-            Flowable
+            Single
                 .just(
                     it.where(RecipeRealm::class.java) // Work around bc Realm doesnt support RxJava3 yet.
                         .equalTo("id", id)
@@ -65,9 +65,10 @@ class RecipeRepository(private val session: Session) : RecipeRepositoryInterface
 
     override fun getRecipesAll() {
         getRealm().let {
-            Flowable
+            Single
                 .just(
                     it.where(RecipeRealm::class.java) // Work around bc Realm doesnt support RxJava3 yet.
+                        .sort("name")
                         .findAll()
                 )
                 .map { result ->
@@ -87,7 +88,7 @@ class RecipeRepository(private val session: Session) : RecipeRepositoryInterface
 
     override fun getRecipesStarred() {
         getRealm().let {
-            Flowable
+            Single
                 .just(
                     it.where(RecipeRealm::class.java) // Work around bc Realm doesnt support RxJava3 yet.
                         .equalTo("starred", true)
@@ -135,6 +136,30 @@ class RecipeRepository(private val session: Session) : RecipeRepositoryInterface
             )
         }
         getRecipe(id)
+    }
+
+    override fun updateRecipeTitle(id: String, title: String) {
+        getRealm().executeTransaction {
+            it.getFirst(id, RecipeRealm::class.java)?.let { recipe ->
+                recipe.name = title
+            }
+        }
+    }
+
+    override fun updateRecipeDesc(id: String, description: String) {
+        getRealm().executeTransaction {
+            it.getFirst(id, RecipeRealm::class.java)?.let { recipe ->
+                recipe.description = description
+            }
+        }
+    }
+
+    override fun updateRecipeStarred(id: String, starred: Boolean) {
+        getRealm().executeTransaction {
+            it.getFirst(id, RecipeRealm::class.java)?.let { recipe ->
+                recipe.starred = starred
+            }
+        }
     }
 
     override fun updateIngredientAmount(data: RecipeCrumb.IngredientAmountViewData) {

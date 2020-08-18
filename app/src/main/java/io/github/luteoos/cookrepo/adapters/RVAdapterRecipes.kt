@@ -34,7 +34,7 @@ class RVAdapterRecipes(data: RealmResults<RecipeRealm>?) :
     }
 
     inner class RecipesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvName = view.findViewById<TextView>(R.id.tvRecipeName)
-        val tvDesc = view.findViewById<TextView>(R.id.tvRecipeDescription)
+        val tvName = view.findViewById<TextView>(R.id.tvRecipeTitle)
+        val tvDesc = view.findViewById<TextView>(R.id.tvRecipeDesc)
     }
 }

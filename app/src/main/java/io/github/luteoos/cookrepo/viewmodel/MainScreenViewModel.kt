@@ -72,6 +72,18 @@ constructor(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel()
     fun createRecipe() =
         recipeRepo.createRecipe()
 
+    fun updateRecipe(id: String, title: String? = null, description: String? = null, starred: Boolean? = null) {
+        title?.let {
+            recipeRepo.updateRecipeTitle(id, it)
+        }
+        description?.let {
+            recipeRepo.updateRecipeDesc(id, it)
+        }
+        starred?.let {
+            recipeRepo.updateRecipeStarred(id, it)
+        }
+    }
+
     fun updateRecipe(id: String, crumb: RecipeCrumb, extra: String) {
         when (crumb) {
             is RecipeCrumb.IngredientAmountViewData -> when (extra) {

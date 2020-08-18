@@ -8,7 +8,7 @@
         android:id="@+id/tvRecipeHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/HeaderTextView"
+        style="@style/AccentTextView"
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:gravity="center_vertical|center_horizontal"
