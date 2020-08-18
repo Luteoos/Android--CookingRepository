@@ -2,9 +2,11 @@ package io.github.luteoos.cookrepo.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.baseAbstract.ActivityNoVM
 
+@AndroidEntryPoint
 class SplashScreenActivity : ActivityNoVM(R.layout.activity_splash_screen) {
 
     override fun onCreate(savedInstanceState: Bundle?) {

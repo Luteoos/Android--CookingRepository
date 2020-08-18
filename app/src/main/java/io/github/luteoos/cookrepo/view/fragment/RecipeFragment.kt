@@ -1,12 +1,13 @@
 package io.github.luteoos.cookrepo.view.fragment
 
 import android.os.Bundle
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.adapters.RVAdapterRecipeCrumbs
 import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
@@ -15,12 +16,12 @@ import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_screen.*
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class RecipeFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_screen) {
 
     @Inject
     lateinit var rvAdapter: RVAdapterRecipeCrumbs
-    override val viewModel: MainScreenViewModel by lazy { ViewModelProvider(requireActivity(), provider).get(MainScreenViewModel::class.java) }
-
+    override val viewModel: MainScreenViewModel by activityViewModels()
     private val args: RecipeFragmentArgs by navArgs()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

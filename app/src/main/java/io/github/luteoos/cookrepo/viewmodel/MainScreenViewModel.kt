@@ -1,5 +1,6 @@
 package io.github.luteoos.cookrepo.viewmodel
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.github.luteoos.cookrepo.baseAbstract.BaseViewModel
@@ -14,10 +15,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.realm.RealmResults
 import timber.log.Timber
-import javax.inject.Inject
 
 class MainScreenViewModel
-@Inject
+@ViewModelInject
 constructor(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel() {
 
     private val subscribers = CompositeDisposable()
