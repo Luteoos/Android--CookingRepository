@@ -1,29 +1,21 @@
 package io.github.luteoos.cookrepo
 
+import android.app.Application
 import android.os.StrictMode
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
-import io.github.luteoos.cookrepo.di.DaggerAppComponent
+import dagger.hilt.android.HiltAndroidApp
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import timber.log.Timber
 
-class Application : DaggerApplication() {
+@HiltAndroidApp
+class Application : Application() {
 
     override fun onCreate() {
         super.onCreate()
-//        startKoin {
-//            if (BuildConfig.DEBUG)
-//                androidLogger()
-//            androidContext(this@Application)
-//            modules(koinModules)
-//        }
         initRealm()
         if (BuildConfig.DEBUG)
             initDebugStuff()
     }
-
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = DaggerAppComponent.builder().application(this).build()
 
     private fun initRealm() {
         Realm.init(this)

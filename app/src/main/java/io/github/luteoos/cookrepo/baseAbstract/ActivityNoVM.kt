@@ -4,9 +4,9 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import dagger.android.support.DaggerAppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
-abstract class ActivityNoVM(layoutId: Int) : DaggerAppCompatActivity(layoutId) {
+abstract class ActivityNoVM(layoutId: Int) : AppCompatActivity(layoutId) {
 
     /**
      * true to portrait <-> default

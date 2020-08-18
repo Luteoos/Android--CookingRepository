@@ -3,9 +3,9 @@ package io.github.luteoos.cookrepo.baseAbstract
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import dagger.android.support.DaggerFragment
+import androidx.fragment.app.Fragment
 
-abstract class FragmentNoVM(layoutId: Int) : DaggerFragment(layoutId) {
+abstract class FragmentNoVM(layoutId: Int) : Fragment(layoutId) {
 
     /**
      * call to hide keyboard

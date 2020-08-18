@@ -1,19 +1,17 @@
 package io.github.luteoos.cookrepo.view.fragment
 
 import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
 import io.github.luteoos.cookrepo.viewmodel.UserProfileViewModel
 import kotlinx.android.synthetic.main.fragment_user_profile.*
 
+@AndroidEntryPoint
 class UserProfileFragment : FragmentVM<UserProfileViewModel>(R.layout.fragment_user_profile) {
 
-    override val viewModel: UserProfileViewModel by lazy {
-        ViewModelProvider(requireActivity(), provider).get(
-            UserProfileViewModel::class.java
-        )
-    }
+    override val viewModel: UserProfileViewModel by viewModels()
 
     override fun onStart() {
         super.onStart()
