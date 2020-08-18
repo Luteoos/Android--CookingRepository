@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import io.github.luteoos.cookrepo.baseAbstract.BaseViewModel
 import io.github.luteoos.cookrepo.data.realm.RecipeRealm
 import io.github.luteoos.cookrepo.data.repo.RecipeRepoData
+import io.github.luteoos.cookrepo.data.view.LoadingState
 import io.github.luteoos.cookrepo.data.view.RecipeCrumb
 import io.github.luteoos.cookrepo.data.view.RecipeViewData
 import io.github.luteoos.cookrepo.repository.RecipeRepositoryInterface
@@ -22,6 +23,7 @@ constructor(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel()
     private val subscribers = CompositeDisposable()
     private val recipes = MutableLiveData<RealmResults<RecipeRealm>>()
     private val recipe = MutableLiveData<RecipeViewData>()
+    private val loadingState = MutableLiveData<LoadingState>()
 
     init {
         Timber.d(" ${this.javaClass.canonicalName} View model created  hashCode ${this.hashCode()}")
@@ -39,6 +41,16 @@ constructor(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel()
                         recipe.value = mapRecipeToViewData(it.result!!)
                 }
         )
+    }
+
+    fun getLoadingState(): LiveData<LoadingState> = loadingState
+
+    fun startLoading() {
+        loadingState.value = LoadingState.StartLoading
+    }
+
+    fun stopLoading() {
+        loadingState.value = LoadingState.StopLoading
     }
 
     fun getRecipesLiveData(): LiveData<RealmResults<RecipeRealm>> = recipes

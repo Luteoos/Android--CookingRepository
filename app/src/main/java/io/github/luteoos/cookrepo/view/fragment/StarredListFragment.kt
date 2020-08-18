@@ -43,10 +43,7 @@ class StarredListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_st
             viewLifecycleOwner,
             Observer { id ->
                 id.get()?.let {
-                    with(findNavController()) {
-                        if (currentDestination?.id == R.id.starredListFragment)
-                            navigate(StarredListFragmentDirections.actionStarredListFragmentToRecipeFragment(it))
-                    }
+                    navigateToRecipe(it)
                 }
             }
         )
@@ -56,5 +53,14 @@ class StarredListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_st
                 rvAdapter.updateData(results)
             }
         )
+    }
+
+    private fun navigateToRecipe(id: String) {
+        with(findNavController()) {
+            if (currentDestination?.id == R.id.starredListFragment) {
+                viewModel.startLoading()
+                navigate(StarredListFragmentDirections.actionStarredListFragmentToRecipeFragment(id))
+            }
+        }
     }
 }

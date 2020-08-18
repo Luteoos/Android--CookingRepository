@@ -25,6 +25,7 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val data = mutableListOf<RecipeCrumb>()
     private val itemUpdate = MutableLiveData<Event<Pair<RecipeCrumb, String>>>()
 
+    // todo modify layouts to icons on right always/add swipable layout
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             Parameters.TYPE_STEP ->

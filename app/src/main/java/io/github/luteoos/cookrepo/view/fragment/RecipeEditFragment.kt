@@ -7,12 +7,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mohamedabulgasem.loadingoverlay.LoadingOverlay
 import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.adapters.RVAdapterRecipeCrumbs
 import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
 import io.github.luteoos.cookrepo.data.view.RecipeViewData
-import io.github.luteoos.cookrepo.utils.Parameters
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_edit_screen.*
 import javax.inject.Inject
@@ -22,17 +20,10 @@ class RecipeEditFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
     @Inject
     lateinit var rvAdapter: RVAdapterRecipeCrumbs
     override val viewModel: MainScreenViewModel by lazy { ViewModelProvider(requireActivity(), provider).get(MainScreenViewModel::class.java) }
-    private val loadingOverlay: LoadingOverlay by lazy {
-        LoadingOverlay.with(
-            context = requireActivity(),
-            dimAmount = Parameters.OVERLAY_DIM
-        )
-    }
     private val args: RecipeEditFragmentArgs by navArgs()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        loadingOverlay.show()
         setRV()
         setBindings()
     }
@@ -69,10 +60,6 @@ class RecipeEditFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
             viewLifecycleOwner,
             Observer { result ->
                 setViewData(result)
-                loadingOverlay.let { overlay ->
-                    if (overlay.isShowing())
-                        overlay.showFor(Parameters.OVERLAY_RECIPE_DELAY) // prevent annoying flickering
-                }
             }
         )
     }
@@ -81,5 +68,6 @@ class RecipeEditFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
         rvAdapter.updateData(data.crumbList)
         tvRecipeTitle.editText?.setText(data.name)
         tvRecipeDesc.editText?.setText(data.description)
+        viewModel.stopLoading()
     }
 }

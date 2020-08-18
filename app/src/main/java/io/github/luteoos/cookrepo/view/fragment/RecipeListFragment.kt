@@ -43,10 +43,7 @@ class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
             viewLifecycleOwner,
             Observer { id ->
                 id.get()?.let {
-                    with(findNavController()) {
-                        if (currentDestination?.id == R.id.recipeListFragment)
-                            navigate(RecipeListFragmentDirections.actionRecipeListFragmentToRecipeFragment(it))
-                    }
+                    navigateToRecipe(it)
                 }
             }
         )
@@ -57,6 +54,7 @@ class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
             }
         )
         fabAdd.setOnClickListener {
+            navigateToRecipeEdit()
 //            val a = RecipeRealm().create(session.username, name = "test splash", description = UUID.randomUUID().toString())
 //            a.steps.add(RecipeStepRealm().create("test step 1", session.username))
 //            a.steps.add(RecipeStepRealm().create("test step 2", session.username))
@@ -66,14 +64,35 @@ class RecipeListFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
 //            Realm.getDefaultInstance().executeTransaction {
 //                it.copyToRealmOrUpdate(a)
 //            }
-            with(findNavController()) {
-                if (currentDestination?.id == R.id.recipeListFragment)
-                    navigate(
-                        RecipeListFragmentDirections.actionRecipeListFragmentToRecipeEditFragment(
-//                        a.id
-                            viewModel.createRecipe()
-                        )
-                    )
+//            with(findNavController()) {
+//                if (currentDestination?.id == R.id.recipeListFragment)
+//                    navigate(
+//                        RecipeListFragmentDirections.actionRecipeListFragmentToRecipeEditFragment(
+// //                        a.id
+//                            viewModel.createRecipe()
+//                        )
+//                    )
+//            }
+        }
+    }
+
+    private fun navigateToRecipe(id: String) {
+        with(findNavController()) {
+            if (currentDestination?.id == R.id.recipeListFragment) {
+                viewModel.startLoading()
+                navigate(RecipeListFragmentDirections.actionRecipeListFragmentToRecipeFragment(id))
+            }
+        }
+    }
+
+    private fun navigateToRecipeEdit() {
+        with(findNavController()) {
+            if (currentDestination?.id == R.id.recipeListFragment) {
+                viewModel.startLoading()
+                navigate(
+                    RecipeListFragmentDirections
+                        .actionRecipeListFragmentToRecipeEditFragment(viewModel.createRecipe())
+                )
             }
         }
     }
