@@ -13,6 +13,7 @@ import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.adapters.RVAdapterRecipeCrumbs
 import io.github.luteoos.cookrepo.baseAbstract.FragmentVM
 import io.github.luteoos.cookrepo.data.view.RecipeViewData
+import io.github.luteoos.cookrepo.utils.setTextChanged
 import io.github.luteoos.cookrepo.viewmodel.MainScreenViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_edit_screen.*
 import kotlinx.android.synthetic.main.view_recipe_title_edit.*
@@ -77,8 +78,8 @@ class RecipeEditFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_rec
 
     private fun setViewData(data: RecipeViewData) {
         rvAdapter.updateData(data.crumbList)
-        tvRecipeTitle.editText?.setText(data.name)
-        tvRecipeDesc.editText?.setText(data.description)
+        tvRecipeTitle.editText?.setTextChanged(data.name)
+        tvRecipeDesc.editText?.setTextChanged(data.description)
         viewModel.stopLoading()
     }
 }

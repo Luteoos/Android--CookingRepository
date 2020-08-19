@@ -1,5 +1,6 @@
 package io.github.luteoos.cookrepo.utils
 
+import android.widget.EditText
 import io.github.luteoos.cookrepo.data.realm.BaseRealmInterface
 import io.realm.Realm
 import io.realm.RealmObject
@@ -34,6 +35,11 @@ fun Calendar.getSDFdate(outputPattern: String = "yyyy-MM-dd HH:mm"): String {
         it.timeZone = TimeZone.getDefault()
         it.format(this.time)
     }
+}
+
+fun EditText.setTextChanged(newText: String) {
+    if (this.text.toString().trim() != newText.trim())
+        this.setText(newText)
 }
 
 fun String.toUUID() =

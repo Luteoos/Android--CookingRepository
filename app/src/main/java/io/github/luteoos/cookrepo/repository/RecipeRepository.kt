@@ -63,6 +63,7 @@ class RecipeRepository(private val session: Session) : RecipeRepositoryInterface
         }
     }
 
+    // todo kick out realmRvAdapter, add realmnDao and make realm.use with mapping to viewData instead real model
     override fun getRecipesAll() {
         getRealm().let {
             Single
@@ -144,6 +145,7 @@ class RecipeRepository(private val session: Session) : RecipeRepositoryInterface
                 recipe.name = title
             }
         }
+        getRecipe(id)
     }
 
     override fun updateRecipeDesc(id: String, description: String) {
@@ -152,6 +154,7 @@ class RecipeRepository(private val session: Session) : RecipeRepositoryInterface
                 recipe.description = description
             }
         }
+        getRecipe(id)
     }
 
     override fun updateRecipeStarred(id: String, starred: Boolean) {
@@ -160,6 +163,7 @@ class RecipeRepository(private val session: Session) : RecipeRepositoryInterface
                 recipe.starred = starred
             }
         }
+        getRecipe(id)
     }
 
     override fun updateIngredientAmount(data: RecipeCrumb.IngredientAmountViewData) {

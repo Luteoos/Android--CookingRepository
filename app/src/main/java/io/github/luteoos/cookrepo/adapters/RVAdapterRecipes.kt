@@ -27,6 +27,8 @@ class RVAdapterRecipes(data: RealmResults<RecipeRealm>?) :
         data?.get(position)?.let { data ->
             holder.tvName.text = data.name
             holder.tvDesc.text = data.description
+            holder.tvDesc.maxLines = 2
+            holder.tvName.maxLines = 2
             holder.itemView.setOnClickListener {
                 onClick.value = Event(data.id)
             }

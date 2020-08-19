@@ -19,7 +19,7 @@
         android:id="@+id/tvRecipeDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/StandardTextView"
+        style="@style/ItalicStandardTextView"
         android:hint="@string/recipe_desc_hint"
         android:layout_below="@id/tvRecipeTitle"
         android:layout_alignParentStart="true"

@@ -17,6 +17,7 @@ import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.adapters.diffutil.RecipeCrumbDiffUtilCallback
 import io.github.luteoos.cookrepo.data.view.RecipeCrumb
 import io.github.luteoos.cookrepo.utils.Parameters
+import io.github.luteoos.cookrepo.utils.setTextChanged
 import io.github.luteoos.mvvmbaselib.Event
 
 class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -99,8 +100,8 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             btnIngredientRemove.visibility = if (editable) View.VISIBLE else View.GONE
             tvIngredientAmount.isEnabled = editable
             tvIngredientName.isEnabled = editable
-            tvIngredientAmount.editText?.setText(data.amount)
-            tvIngredientName.editText?.setText(data.ingredient.name)
+            tvIngredientAmount.editText?.setTextChanged(data.amount)
+            tvIngredientName.editText?.setTextChanged(data.ingredient.name)
 
             btnIngredientRemove.setOnClickListener {
                 itemUpdate.value = Event(data.copy() to Parameters.CRUMB_EXTRA_DELETE)
@@ -129,7 +130,7 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             checkBoxRecipe.visibility = if (editable) View.GONE else View.VISIBLE
             btnRecipeRemove.visibility = if (editable) View.VISIBLE else View.GONE
             tvStep.isEnabled = editable
-            tvStep.editText?.setText(data.text)
+            tvStep.editText?.setTextChanged(data.text)
 
             btnRecipeRemove.setOnClickListener {
                 itemUpdate.value = Event(data.copy() to Parameters.CRUMB_EXTRA_DELETE)

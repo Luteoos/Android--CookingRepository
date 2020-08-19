@@ -2,4 +2,5 @@
 <resources>
     <dimen name="menuBarHeight">55dp</dimen>
     <dimen name="mainHeaderHeight">55dp</dimen>
+    <dimen name="rv_recipe_item_height">80dp</dimen>
 </resources>

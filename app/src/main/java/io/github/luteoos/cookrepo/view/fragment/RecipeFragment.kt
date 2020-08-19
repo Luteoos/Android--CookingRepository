@@ -71,6 +71,7 @@ class RecipeFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_
         )
     }
 
+//    TODO checkboxes not quite work as intended(on rotation gets restarted)
     private fun setViewData(data: RecipeViewData) {
         rvAdapter.updateData(data.crumbList)
         tvRecipeTitle.text = data.name
