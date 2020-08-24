@@ -13,7 +13,7 @@ class FragmentModule {
 
     @Provides
     fun provideRecipesAdapter(): RVAdapterRecipes {
-        return RVAdapterRecipes(null)
+        return RVAdapterRecipes()
     }
 
     @Provides

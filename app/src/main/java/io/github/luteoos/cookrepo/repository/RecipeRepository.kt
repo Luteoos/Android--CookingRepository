@@ -1,213 +1,151 @@
 package io.github.luteoos.cookrepo.repository
 
+import io.github.luteoos.cookrepo.dao.RecipeDao
 import io.github.luteoos.cookrepo.data.realm.IngredientAmountRealm
-import io.github.luteoos.cookrepo.data.realm.IngredientRealm
-import io.github.luteoos.cookrepo.data.realm.RecipeRealm
 import io.github.luteoos.cookrepo.data.realm.RecipeStepRealm
 import io.github.luteoos.cookrepo.data.repo.RecipeRepoData
 import io.github.luteoos.cookrepo.data.view.IngredientViewData
 import io.github.luteoos.cookrepo.data.view.RecipeCrumb
+import io.github.luteoos.cookrepo.data.view.RecipeRecyclerViewData
 import io.github.luteoos.cookrepo.data.wrapper.RecipeWrapper
-import io.github.luteoos.cookrepo.data.wrapper.RecipesRealmWrapper
+import io.github.luteoos.cookrepo.data.wrapper.RecipesListWrapper
 import io.github.luteoos.cookrepo.utils.Session
-import io.github.luteoos.cookrepo.utils.getFirst
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.PublishSubject
-import io.realm.Realm
 import io.realm.RealmList
 import timber.log.Timber
 
-class RecipeRepository(private val session: Session) : RecipeRepositoryInterface {
+class RecipeRepository(
+    private val session: Session,
+    private val recipeDao: RecipeDao
+) : RecipeRepositoryInterface {
 
-    private val streamRecipes: PublishSubject<RecipesRealmWrapper> = PublishSubject.create()
+    private val streamRecipes: PublishSubject<RecipesListWrapper> = PublishSubject.create()
     private val streamRecipe: PublishSubject<RecipeWrapper> = PublishSubject.create()
-    private var realm: Realm? = null // Work around realm not support rxjava3.
+    private val recipeStream = Single.fromCallable {
+        recipeDao.getRecipes()
+    }
 
-    override fun getRecipesObservable(): Observable<RecipesRealmWrapper> = streamRecipes
+    override fun getRecipesObservable(): Observable<RecipesListWrapper> = streamRecipes
 
     override fun getRecipeObservable(): Observable<RecipeWrapper> = streamRecipe
 
     override fun getRecipe(id: String) {
-        getRealm().let {
-            Single
-                .just(
-                    it.where(RecipeRealm::class.java) // Work around bc Realm doesnt support RxJava3 yet.
-                        .equalTo("id", id)
-                        .findFirst()
-                )
-                .map { result ->
-                    if (result == null)
-                        throw Exception("No recipe found")
-                    else
-                        it.copyFromRealm(result).let { recipeRealm ->
-                            RecipeRepoData(
-                                result.id,
-                                recipeRealm.name,
-                                recipeRealm.description,
-                                recipeRealm.starred,
-                                mapIngredientToRecipeCrumb(recipeRealm.ingredients),
-                                mapStepToRecipeCrumb(recipeRealm.steps)
-                            )
-                        }
+        Single
+            .just(recipeDao.getRecipe(id))
+            .map { result ->
+                if (result == null)
+                    throw Exception("No recipe found")
+                else
+                    RecipeRepoData(
+                        result.id,
+                        result.name,
+                        result.description,
+                        result.starred,
+                        mapIngredientToRecipeCrumb(result.ingredients),
+                        mapStepToRecipeCrumb(result.steps)
+                    )
+            }
+            .subscribe(
+                { wrapper ->
+                    streamRecipe.onNext(RecipeWrapper(wrapper))
+                },
+                { e ->
+                    Timber.e(e)
+                    streamRecipe.onNext(RecipeWrapper(false))
                 }
-                .subscribe(
-                    { wrapper ->
-                        streamRecipe.onNext(RecipeWrapper(wrapper))
-                    },
-                    { e ->
-                        Timber.e(e)
-                        streamRecipe.onNext(RecipeWrapper(false))
-                    }
-                )
-        }
+            )
     }
 
-    // todo kick out realmRvAdapter, add realmnDao and make realm.use with mapping to viewData instead real model
     override fun getRecipesAll() {
-        getRealm().let {
-            Single
-                .just(
-                    it.where(RecipeRealm::class.java) // Work around bc Realm doesnt support RxJava3 yet.
-                        .sort("name")
-                        .findAll()
-                )
-                .map { result ->
-                    RecipesRealmWrapper(result)
+        recipeStream
+            .map { result ->
+                RecipesListWrapper(
+                    result.map { RecipeRecyclerViewData(it.id, it.name, it.description) }.toMutableList()
+                ) // potential problem with not preserving order
+            }
+            .subscribe(
+                { wrapper ->
+                    streamRecipes.onNext(wrapper)
+                },
+                { e ->
+                    Timber.e(e)
+                    streamRecipes.onNext(RecipesListWrapper(false))
                 }
-                .subscribe(
-                    { wrapper ->
-                        streamRecipes.onNext(wrapper)
-                    },
-                    { e ->
-                        Timber.e(e)
-                        streamRecipes.onNext(RecipesRealmWrapper(false))
-                    }
-                )
-        }
+            )
     }
 
     override fun getRecipesStarred() {
-        getRealm().let {
-            Single
-                .just(
-                    it.where(RecipeRealm::class.java) // Work around bc Realm doesnt support RxJava3 yet.
-                        .equalTo("starred", true)
-                        .findAll()
-                )
-                .map { result ->
-                    RecipesRealmWrapper(result)
+        recipeStream
+            .map {
+                it.filter { recipe -> recipe.starred }
+            }
+            .map { result ->
+                RecipesListWrapper(
+                    result.map { RecipeRecyclerViewData(it.id, it.name, it.description) }.toMutableList()
+                ) // potential problem with not preserving order
+            }
+            .subscribe(
+                { wrapper ->
+                    streamRecipes.onNext(wrapper)
+                },
+                { e ->
+                    Timber.e(e)
+                    streamRecipes.onNext(RecipesListWrapper(false))
                 }
-                .subscribe(
-                    { wrapper ->
-                        streamRecipes.onNext(wrapper)
-                    },
-                    { e ->
-                        Timber.e(e)
-                        streamRecipes.onNext(RecipesRealmWrapper(false))
-                    }
-                )
-        }
+            )
     }
 
     override fun createRecipe(): String {
-        val recipe = RecipeRealm().create(author = session.username)
-        getRealm().executeTransaction {
-            it.copyToRealm(recipe)
-        }
-        return recipe.id
+        return recipeDao.createRecipe(session.username)
     }
 
     override fun createIngredientAmount(id: String) {
-        getRealm().executeTransaction {
-            it.getFirst(id, RecipeRealm::class.java)?.ingredients?.add(
-                IngredientAmountRealm().create(
-                    IngredientRealm().create(author = session.username),
-                    author = session.username
-                )
-            )
-        }
+        recipeDao.createIngredientAmount(id, session.username)
         getRecipe(id)
     }
 
     override fun createStep(id: String) {
-        getRealm().executeTransaction {
-            it.getFirst(id, RecipeRealm::class.java)?.steps?.add(
-                RecipeStepRealm().create(author = session.username)
-            )
-        }
+        recipeDao.createStep(id, session.username)
         getRecipe(id)
     }
 
     override fun updateRecipeTitle(id: String, title: String) {
-        getRealm().executeTransaction {
-            it.getFirst(id, RecipeRealm::class.java)?.let { recipe ->
-                recipe.name = title
-            }
-        }
+        recipeDao.updateRecipeTitle(id, title)
         getRecipe(id)
     }
 
     override fun updateRecipeDesc(id: String, description: String) {
-        getRealm().executeTransaction {
-            it.getFirst(id, RecipeRealm::class.java)?.let { recipe ->
-                recipe.description = description
-            }
-        }
+        recipeDao.updateRecipeDesc(id, description)
         getRecipe(id)
     }
 
     override fun updateRecipeStarred(id: String, starred: Boolean) {
-        getRealm().executeTransaction {
-            it.getFirst(id, RecipeRealm::class.java)?.let { recipe ->
-                recipe.starred = starred
-            }
-        }
+        recipeDao.updateRecipeStarred(id, starred)
         getRecipe(id)
     }
 
     override fun updateIngredientAmount(data: RecipeCrumb.IngredientAmountViewData) {
-        getRealm().executeTransaction {
-            it.getFirst(data.id, IngredientAmountRealm::class.java)?.let { amount ->
-                amount.amount = data.amount
-                amount.ingredient?.name = data.ingredient.name
-            }
-        }
+        recipeDao.updateIngredientAmount(data.id, data.amount, data.ingredient.name, data.carted)
     }
 
     override fun updateStep(data: RecipeCrumb.RecipeStepViewData) {
-        getRealm().executeTransaction {
-            it.getFirst(data.id, RecipeStepRealm::class.java)?.let { step ->
-                step.text = data.text
-            }
-        }
+        recipeDao.updateStep(data.id, data.text)
+    }
+
+    override fun deleteRecipe(id: String) {
+        recipeDao.deleteRecipe(id)
     }
 
     override fun deleteIngredientAmount(id: String, recipeId: String) {
-        getRealm().executeTransaction {
-            it.getFirst(id, IngredientAmountRealm::class.java)?.cascadeDelete()
-        }
+        recipeDao.deleteIngredientAmount(id, recipeId)
         getRecipe(recipeId)
     }
 
     override fun deleteStep(id: String, recipeId: String) {
-        getRealm().executeTransaction {
-            it.getFirst(id, RecipeStepRealm::class.java)?.deleteFromRealm()
-        }
+        recipeDao.deleteStep(id, recipeId)
         getRecipe(recipeId)
-    }
-
-    override fun clear() {
-        getRealm().close()
-    }
-
-    private fun getRealm(): Realm {
-        realm?.let {
-            return it
-        } ?: run {
-            realm = Realm.getDefaultInstance()
-            return realm!!
-        }
     }
 
     private fun mapIngredientToRecipeCrumb(ingredients: RealmList<IngredientAmountRealm>): MutableList<RecipeCrumb> {
@@ -218,7 +156,8 @@ class RecipeRepository(private val session: Session) : RecipeRepositoryInterface
                         RecipeCrumb.IngredientAmountViewData(
                             amountRealm.id,
                             IngredientViewData(ingredientRealm.id, ingredientRealm.name ?: ""),
-                            amountRealm.amount
+                            amountRealm.amount,
+                            amountRealm.isInCart
                         )
                     } ?: throw Exception("No ingredient data")
                 }

@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/recipeCheckBox"
-        android:layout_width="60dp"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        />
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/recipeStepInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/recipeRemoveButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/recipe_step_hint"
+            android:inputType="textAutoCorrect" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
         android:id="@+id/recipeRemoveButton"
@@ -18,20 +28,9 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:src="@drawable/ic_cancel_24px"
         android:visibility="gone"
-        android:src="@drawable/ic_delete_forever_24px"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/recipeStepInput"
-        android:padding="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/recipe_step_hint"
-            android:inputType="textAutoCorrect"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
-</LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

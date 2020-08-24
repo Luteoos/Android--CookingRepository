@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
@@ -93,16 +92,25 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val tvIngredientName = view.findViewById<TextInputLayout>(R.id.ingredientNameInput)
         private val tvIngredientAmount = view.findViewById<TextInputLayout>(R.id.ingredientAmountInput)
         private val btnIngredientRemove = view.findViewById<ImageButton>(R.id.ingredientRemoveButton)
-        private val checkBoxIngredient = view.findViewById<CheckBox>(R.id.ingredientCheckBox)
+        private val btnCart = view.findViewById<ImageButton>(R.id.recipeCartButton)
 
         fun setIngredientData(data: RecipeCrumb.IngredientAmountViewData) {
-            checkBoxIngredient.visibility = if (editable) View.GONE else View.VISIBLE
+            btnCart.setImageResource(
+                if (data.carted)
+                    R.drawable.ic_remove_shopping_cart_24px
+                else
+                    R.drawable.ic_add_shopping_cart_24px
+            )
+            btnCart.visibility = if (editable) View.GONE else View.VISIBLE
             btnIngredientRemove.visibility = if (editable) View.VISIBLE else View.GONE
             tvIngredientAmount.isEnabled = editable
             tvIngredientName.isEnabled = editable
             tvIngredientAmount.editText?.setTextChanged(data.amount)
             tvIngredientName.editText?.setTextChanged(data.ingredient.name)
 
+            btnCart.setOnClickListener {
+                itemUpdate.value = Event(updateData(data, !data.carted) to Parameters.CRUMB_EXTRA_EDIT)
+            }
             btnIngredientRemove.setOnClickListener {
                 itemUpdate.value = Event(data.copy() to Parameters.CRUMB_EXTRA_DELETE)
             }
@@ -114,20 +122,19 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         }
 
-        private fun updateData(data: RecipeCrumb.IngredientAmountViewData) =
+        private fun updateData(data: RecipeCrumb.IngredientAmountViewData, isCarted: Boolean? = null) =
             data.copy(
                 ingredient = data.ingredient.copy(name = tvIngredientName.editText?.text.toString()),
-                amount = tvIngredientAmount.editText?.text.toString()
+                amount = tvIngredientAmount.editText?.text.toString(),
+                carted = isCarted ?: data.carted
             )
     }
 
     inner class RecipeStepVH(view: View) : RecyclerView.ViewHolder(view) {
         private val tvStep = view.findViewById<TextInputLayout>(R.id.recipeStepInput)
         private val btnRecipeRemove = view.findViewById<ImageButton>(R.id.recipeRemoveButton)
-        private val checkBoxRecipe = view.findViewById<CheckBox>(R.id.recipeCheckBox)
 
         fun setStepData(data: RecipeCrumb.RecipeStepViewData) {
-            checkBoxRecipe.visibility = if (editable) View.GONE else View.VISIBLE
             btnRecipeRemove.visibility = if (editable) View.VISIBLE else View.GONE
             tvStep.isEnabled = editable
             tvStep.editText?.setTextChanged(data.text)

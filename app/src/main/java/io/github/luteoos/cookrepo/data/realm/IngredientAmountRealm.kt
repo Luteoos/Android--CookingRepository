@@ -14,6 +14,7 @@ open class IngredientAmountRealm : RealmObject(), BaseRealmInterface {
 
     var ingredient: IngredientRealm? = null
     var amount: String = ""
+    var isInCart: Boolean = false
     @Ignore
     var isCompleted: Boolean = false
 

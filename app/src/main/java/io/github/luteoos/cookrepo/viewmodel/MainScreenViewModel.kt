@@ -4,16 +4,15 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.github.luteoos.cookrepo.baseAbstract.BaseViewModel
-import io.github.luteoos.cookrepo.data.realm.RecipeRealm
 import io.github.luteoos.cookrepo.data.repo.RecipeRepoData
 import io.github.luteoos.cookrepo.data.view.LoadingState
 import io.github.luteoos.cookrepo.data.view.RecipeCrumb
+import io.github.luteoos.cookrepo.data.view.RecipeRecyclerViewData
 import io.github.luteoos.cookrepo.data.view.RecipeViewData
 import io.github.luteoos.cookrepo.repository.RecipeRepositoryInterface
 import io.github.luteoos.cookrepo.utils.Parameters
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.realm.RealmResults
 import timber.log.Timber
 
 class MainScreenViewModel
@@ -21,7 +20,7 @@ class MainScreenViewModel
 constructor(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel() {
 
     private val subscribers = CompositeDisposable()
-    private val recipes = MutableLiveData<RealmResults<RecipeRealm>>()
+    private val recipes = MutableLiveData<MutableList<RecipeRecyclerViewData>>()
     private val recipe = MutableLiveData<RecipeViewData>()
     private val loadingState = MutableLiveData<LoadingState>()
 
@@ -53,7 +52,7 @@ constructor(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel()
         loadingState.value = LoadingState.StopLoading
     }
 
-    fun getRecipesLiveData(): LiveData<RealmResults<RecipeRealm>> = recipes
+    fun getRecipesLiveData(): LiveData<MutableList<RecipeRecyclerViewData>> = recipes
 
     fun getRecipeLiveData(): LiveData<RecipeViewData> = recipe
 
@@ -107,7 +106,6 @@ constructor(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel()
 
     override fun onCleared() {
         subscribers.dispose()
-        recipeRepo.clear()
         super.onCleared()
     }
 

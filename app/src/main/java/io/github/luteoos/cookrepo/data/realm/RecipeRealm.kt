@@ -24,4 +24,10 @@ open class RecipeRealm : RealmObject(), BaseRealmInterface {
         this.description = description
         return this
     }
+
+    fun cascadeDelete() {
+        ingredients.forEach { it.cascadeDelete() }
+        steps.forEach { it.deleteFromRealm() }
+        this.deleteFromRealm()
+    }
 }

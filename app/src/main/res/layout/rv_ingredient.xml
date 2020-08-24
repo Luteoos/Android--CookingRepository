@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/ingredientCheckBox"
-        android:layout_width="60dp"
-        android:layout_gravity="center"
-        android:visibility="gone"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ingredientAmountInput"
+        android:layout_width="70dp"
         android:layout_height="match_parent"
-        />
+        android:padding="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/ingredient_amount_hint"
+            android:inputType="textNoSuggestions"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ingredientNameInput"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/recipeCartButton"
+        app:layout_constraintStart_toEndOf="@+id/ingredientAmountInput"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/ingredient_hint"
+            android:inputType="textAutoCorrect"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
         android:id="@+id/ingredientRemoveButton"
@@ -18,33 +49,20 @@
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:src="@drawable/ic_cancel_24px"
         android:visibility="gone"
-        android:src="@drawable/ic_delete_forever_24px"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ingredientAmountInput"
-        android:layout_width="70dp"
+    <ImageButton
+        android:id="@+id/recipeCartButton"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="60dp"
         android:layout_height="match_parent"
-        android:padding="4dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/ingredient_amount_hint"
-            android:inputType="textNoSuggestions" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/ingredientNameInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/ingredient_hint"
-            android:inputType="textAutoCorrect" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-</LinearLayout>
+        android:src="@drawable/ic_add_shopping_cart_24px"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ingredientRemoveButton"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
