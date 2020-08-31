@@ -13,6 +13,6 @@ jobs:
           name: chmod permissions
           command: chmod +x ./gradlew
       - run:
-          command: ./gradlew lintKotlin
-      - run:
           command: ./gradlew build
+      - run:
+          command: ./gradlew lintKotlin
