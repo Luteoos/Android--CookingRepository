@@ -16,3 +16,12 @@ jobs:
           command: ./gradlew build
       - run:
           command: ./gradlew lintKotlin
+          
+workflows:
+  version: 2.1
+  main:
+    jobs:
+    - build:
+        filters:
+          branches:
+            only: master
