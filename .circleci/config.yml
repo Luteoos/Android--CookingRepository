@@ -1,0 +1,27 @@
+version: 2.1
+
+orbs:
+ android: circleci/android@0.2.0
+
+jobs:
+  build:
+    executor: android/android
+        
+    steps:
+      - checkout
+      - run:
+          name: chmod permissions
+          command: chmod +x ./gradlew
+      - run:
+          command: ./gradlew build
+      - run:
+          command: ./gradlew lintKotlin
+          
+workflows:
+  version: 2.1
+  main:
+    jobs:
+    - build:
+        filters:
+          branches:
+            only: master
