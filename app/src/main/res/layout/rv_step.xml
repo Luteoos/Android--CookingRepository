@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/recipeRemoveButton"
+        app:layout_constraintEnd_toStartOf="@+id/recipeStepRemoveButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -23,7 +23,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
-        android:id="@+id/recipeRemoveButton"
+        android:id="@+id/recipeStepRemoveButton"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="60dp"
         android:layout_height="wrap_content"

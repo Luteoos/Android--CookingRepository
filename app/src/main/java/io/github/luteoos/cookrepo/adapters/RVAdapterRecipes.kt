@@ -3,6 +3,7 @@ package io.github.luteoos.cookrepo.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,14 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import io.github.luteoos.cookrepo.R
 import io.github.luteoos.cookrepo.adapters.diffutil.RecipesDiffUtilCallback
 import io.github.luteoos.cookrepo.data.view.RecipeRecyclerViewData
+import io.github.luteoos.cookrepo.utils.Parameters
 import io.github.luteoos.mvvmbaselib.Event
 
 class RVAdapterRecipes : RecyclerView.Adapter< RVAdapterRecipes.RecipesViewHolder>() {
 
     private val data = mutableListOf<RecipeRecyclerViewData>()
-    private val onClick = MutableLiveData<Event<String>>()
+    private val onClick = MutableLiveData<Event<Pair<String, String>>>()
 
-    fun getOnClick(): LiveData<Event<String>> = onClick
+    fun getOnClick(): LiveData<Event<Pair<String, String>>> = onClick
 
     override fun getItemCount(): Int = data.size
 
@@ -31,8 +33,11 @@ class RVAdapterRecipes : RecyclerView.Adapter< RVAdapterRecipes.RecipesViewHolde
             holder.tvDesc.text = data.description
             holder.tvDesc.maxLines = 2
             holder.tvName.maxLines = 2
-            holder.itemView.setOnClickListener {
-                onClick.value = Event(data.id)
+            holder.titleView.setOnClickListener {
+                onClick.value = Event(data.id to Parameters.RECIPE_ADAPTER_OPEN)
+            }
+            holder.btnDelete.setOnClickListener {
+                onClick.value = Event(data.id to Parameters.RECIPE_ADAPTER_DELETE)
             }
         }
     }
@@ -47,5 +52,7 @@ class RVAdapterRecipes : RecyclerView.Adapter< RVAdapterRecipes.RecipesViewHolde
     inner class RecipesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvName = view.findViewById<TextView>(R.id.tvRecipeTitle)
         val tvDesc = view.findViewById<TextView>(R.id.tvRecipeDesc)
+        val btnDelete = view.findViewById<ImageButton>(R.id.recipeRemoveButton)
+        val titleView = view.findViewById<View>(R.id.title_view)
     }
 }

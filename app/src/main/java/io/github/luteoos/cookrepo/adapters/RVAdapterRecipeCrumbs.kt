@@ -132,7 +132,7 @@ class RVAdapterRecipeCrumbs : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class RecipeStepVH(view: View) : RecyclerView.ViewHolder(view) {
         private val tvStep = view.findViewById<TextInputLayout>(R.id.recipeStepInput)
-        private val btnRecipeRemove = view.findViewById<ImageButton>(R.id.recipeRemoveButton)
+        private val btnRecipeRemove = view.findViewById<ImageButton>(R.id.recipeStepRemoveButton)
 
         fun setStepData(data: RecipeCrumb.RecipeStepViewData) {
             btnRecipeRemove.visibility = if (editable) View.VISIBLE else View.GONE

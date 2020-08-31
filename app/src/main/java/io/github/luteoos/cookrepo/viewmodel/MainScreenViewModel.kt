@@ -104,6 +104,14 @@ constructor(private val recipeRepo: RecipeRepositoryInterface) : BaseViewModel()
         }
     }
 
+    fun deleteRecipe(id: String, starred: Boolean = false) {
+        recipeRepo.deleteRecipe(id)
+        if (starred)
+            getRecipesStarred()
+        else
+            getRecipesAll()
+    }
+
     override fun onCleared() {
         subscribers.dispose()
         super.onCleared()

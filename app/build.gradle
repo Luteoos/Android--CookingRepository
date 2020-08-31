@@ -81,6 +81,9 @@ dependencies {
 //    until I get proper Lottie aniamtion json
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
 
+    def swipe_layout_version = "1.1.0"
+    implementation "ru.rambler.android:swipe-layout:$swipe_layout_version"
+
     def material_version = "1.2.0"
     implementation "com.google.android.material:material:$material_version"
 
