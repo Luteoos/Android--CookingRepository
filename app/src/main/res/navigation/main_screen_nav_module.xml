@@ -53,4 +53,10 @@
             app:destination="@id/recipeEditFragment"
             app:popUpTo="@id/recipeFragment"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="io.github.luteoos.cookrepo.view.fragment.CartFragment"
+        android:label="CartFragment"
+        tools:layout="@layout/fragment_cart_screen"/>
 </navigation>

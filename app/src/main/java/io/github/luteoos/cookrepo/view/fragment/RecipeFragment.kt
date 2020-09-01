@@ -63,6 +63,15 @@ class RecipeFragment : FragmentVM<MainScreenViewModel>(R.layout.fragment_recipe_
                     navigate(RecipeFragmentDirections.actionRecipeFragmentToRecipeEditFragment(args.recipeId))
             }
         }
+        rvAdapter.getItemUpdate().observe(
+            viewLifecycleOwner,
+            Observer { crumb ->
+                crumb.get()?.let {
+                    viewModel.updateRecipe(args.recipeId, it.first, it.second)
+                    viewModel.getRecipe(args.recipeId)
+                }
+            }
+        )
         viewModel.getRecipeLiveData().observe(
             viewLifecycleOwner,
             Observer { result ->

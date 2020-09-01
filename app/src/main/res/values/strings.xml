@@ -4,6 +4,7 @@
     <string name="profile">Profile</string>
     <string name="favs">Favourites</string>
     <string name="recipes">Recipes</string>
+    <string name="cart">Cart</string>
     <string name="username_hint">Username</string>
 
     <string name="recipe_step_hint">Step</string>

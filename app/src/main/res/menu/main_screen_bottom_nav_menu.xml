@@ -14,6 +14,12 @@
         android:icon="@drawable/ic_favorite_18dp"/>
 
     <item
+        android:id="@id/cartFragment"
+        android:enabled="true"
+        android:title="@string/cart"
+        android:icon="@drawable/ic_shopping_cart_18dp"/>
+
+    <item
         android:id="@id/userProfileFragment"
         android:enabled="true"
         android:title="@string/profile"
