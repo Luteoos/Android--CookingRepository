@@ -33,7 +33,9 @@ class RecipeRepository(
 
     override fun getRecipe(id: String) {
         Single
-            .just(recipeDao.getRecipe(id))
+            .fromCallable {
+                recipeDao.getRecipe(id)
+            }
             .map { result ->
                 if (result == null)
                     throw Exception("No recipe found")
